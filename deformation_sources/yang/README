@@ -1,0 +1,3 @@
+Falk, March 2002:
+yang_source.m is slightly modifed from Yuri's fcn_yangM.m so that it can called
+like our other functions
