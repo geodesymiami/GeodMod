@@ -1,0 +1,25 @@
+mex -setup    (I think, try mex file.f -n to see whether your compiler is in the path)
+
+mex  disloc3d.f dc3d.f
+
+#############################################
+disloc3d doen not compile properly under linux
+
+The test program
+
+test_disloc3d           (which does twice the same thing) should produce:
+
+ns =
+     []
+ans =
+     []
+ans =
+     []
+ans =
+     []
+ans =
+   1.0e+04 *
+    2.2202    2.2202
+
+as it does it under solaris
+ 

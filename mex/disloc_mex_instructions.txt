@@ -1,0 +1,14 @@
+Instructions for making disloc1.mex files for new machines.
+
+1. log onto the machine you want to use.
+
+2.  type 'mex -setup'
+
+3. type '2', hit enter
+
+4. open matlab
+
+5. go into the folder geodmod/mex/
+
+6. type 'mex disloc1.c'.
+
