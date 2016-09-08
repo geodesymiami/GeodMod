@@ -1,0 +1,32 @@
+Yuri Fialko wrote:
+> 
+> Hi Falk,
+> The penny crack code can be downloaded from my anonymous ftp site,
+> topex.ucsd.edu/pub/fialko/penny
+> The scripts should be self-explanatory. You may get the Yang code
+> at the same site, pub/fialko/yang. A word of caution: Yang et al.
+> solutions are not accurate when the source size is of the order
+> of the source depth (they seem to work fine in the point source
+> approximation).
+> Let me know if there are any problems. I'd appreciate a pre/re-
+> print of your work on Marchena.
+
+> A few comments about the matlab code that implements Yang's
+> solutions:
+> 1) in the yang.m routine (line 70)
+> I usually use the following equation for C0:
+> 
+> C0=z00/sinth;
+> 
+> instead of
+> 
+> C0=y0*costh+z00*sinth;  % check this!
+> 
+> The latter is the formula given in the paper, but the former is actually
+> needed to reproduce the figures in the Yang et al. paper (it also
+> makes more sense).
+> 
+> 2) In the fcn_yangM.m routine (line 26),
+> phi=as(7) is the strike, and theta=as(8) is the plunge of the major
+> axis of the ellipsoid (comments are permuted).
+
