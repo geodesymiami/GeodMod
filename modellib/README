@@ -1,0 +1,8 @@
+To add new models the following functions need to be modified:
+InitializeModelopt.m
+InitializeInverseopt.m
+MakeStringForPlot.m
+ForwardModel.m
+find_coord_index.m
+displotmulti.m
+plot_model_parameters.m
