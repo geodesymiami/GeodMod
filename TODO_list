@@ -1,0 +1,73 @@
+
+1.  MakeQuakes: should use quakeopt.file and quakeopt.format. Should introduce this the moment we work with 2 quakefiles.
+1.1 Prepare:    data should be loaded using  (requires changes of the *min files and probably messing around with symbopt
+             Quakes = MakeQuakes(quakeopt)
+             Faults = MakeFaults(faultopt)
+             Roads  = MakeRoads (roadopt)
+             GPS    = MakeGPS   (gpsopt)
+
+3. Check whether geodmod version is consistent with *min file
+cvs status -v README_INSTALL | grep -A1 Existing | tail -1 | awk '{print $1}' >! masterfile/geodmod_version
+
+4.1 do the bw_areaoen thing also after the median filtering in Igram2Motion
+    we probably need : makesaropt.igram2motionopt.cormask_area_open    =  500
+
+
+5. Changing read_from_file so that commands are evaluated
+TESTDATA=getenv('GEODMOD_PROJECTDATA')
+q1='dirvar'
+q2='strcat(TESTDATA,''/dem'')'
+eval(sprintf('%s=%s ;',q1,q2))
+
+6. calculation progress:  (the following works well from Loren's Blog)
+     % Example Code for Printing Progress to the Command Window
+     fprintf(1,'here''s my integer:     ');
+     for i=1:999
+         fprintf(1,'\b\b\b%3d',i); pause(.2)
+     end
+     fprintf('\n')
+7. Change source description:
+inverseopt.source(1).description                    =   {'disloc', 'linear', 'xy'}
+inverseopt.source(1).lowerbound                     =  [ 4.0  4.0  1.0  -89.9 25.0  10.0  10.0  0.0  0.0 1.0  ];
+inverseopt.source(1).upperbound                     =  [ 4.0  4.0  1.0  -89.9 25.0  10.0  10.0  0.0  0.0 1.0  ];
+inverseopt.source(2).description                    =   {'mogi', 'linear', 'xy'}
+inverseopt.source(2).lowerbound                     =  [ 4.0  4.0  1.0  1.0  ];
+inverseopt.source(2).upperbound                     =  [ 4.0  4.0  1.0  1.0  ];
+
+or
+inverseopt.source(1).descriptmin                     =  [ 'disloc', 'fixed', 'xy' ,  4.0  4.0  1.0  -89.9 25.0  10.0  10.0  0.0  0.0 1.0  ];
+inverseopt.source(1).descriptmax                     =  [ 'disloc', 'fixed', 'xy' ,  4.0  4.0  1.0  -89.9 25.0  10.0  10.0  0.0  0.0 1.0  ];
+
+8. Check input *min file for consistency.
+   I had the case with N_disloc=1 and N_mogi=0 
+   but inverseopt.mogi_bounds.ll was given which caused a disaster. It was very difficult to find the problem
+
+9. GridSearch should have an option to produce the model parameters in matrix form for quick model evaluation. The following in
+gibbs.m (line 128) does the objective fuction call in matrix form (same code in anneal.m)
+
+			if matrix
+				O=feval(FUN,modelmatrix,varargin{:});
+			else
+				O=zeros(NM,1);
+				for e=1:NM
+					O(e)=feval(FUN,modelmatrix(:,e),varargin{:});
+	                count=count+1;
+           		end
+			end
+modelmatrix is a 3x9 variable for a mogi source with 3 nonlin parameters  
+
+10. Parallelizing anneal. I tried to use a parfor loop over the runs (so that 4 runs are done in parallel) but I get errors because variables
+energy and model can't be classified for parfor. Don't know why. the following works:
+matlabpool local 4
+aa=zeros(8,1);
+tic; parfor(i=1:8)   a=rand(5000); aa(i)=max(max(a)); disp(aa(i)); end ; toc
+tic; for(i=1:8)   a=rand(5000); aa(i)=max(max(a)); disp(aa(i)); end ; toc
+
+in anneal.m the following made things slower but not faster:
+     parfor e=1:NM   
+            O(e)=feval(FUN,modelmatrix(:,e),varargin{:});
+     end
+
+     parfor x=1:p
+gives the error message: the variable count and energy can't be classified
+
