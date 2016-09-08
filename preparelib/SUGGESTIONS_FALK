@@ -1,0 +1,2 @@
+plotigramopt (prepared by PreparePlot) should contain a field 'BaseMap' which containes the DEM and the shaded relief. This will be used for the 
+This provides the co-dorfinates in PlotIgram. In a frst stage the igram structure should have the same coordinates as BaseMap but at a later stage it should allow for different coordinates and subsets and the igram data will be resampled on the BaseMap (by filling with zeros or NaNs)
