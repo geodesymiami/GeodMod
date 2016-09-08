@@ -1,0 +1,55 @@
+Dear All,
+
+A first version of the stacking and modelling software is in the /RAID6/insar_lab/matlab directory.  It makes stacks, and models our roi_pac interferograms plus GPS data.  Some example plots
+are attached below.  Additional examples are in
+
+file:///RAID6/insar_lab/matlab/examples_MakeModelData/html/example_ML1.html
+file:///RAID6/insar_lab/matlab/examples_MakeModelData/html/example_ML2.html
+file:///RAID6/insar_lab/matlab/examples_MakeModelData/html/example_Kil1.html
+file:///RAID6/insar_lab/matlab/examples_MakeModelData/html/example_Kil2.html
+
+To run it,
+ copy setmlibs.m  and the  example_MakeModelData/*min files in your directory and run
+
+setmlibs
+MakeModelData(' example_Kil1.min')
+
+The html files are currently produced using
+pMakeModelData(*), but this needs some more work
+
+You need matlab R2006a. 
+
+This supposed  to be the first piece of a complex InSAR processing suite. Everything is controlled by an text file (*min). The hope is that everybody in the group will contribute code. If you
+have new code (individual files) just put it in your own directory (e.g. ~ngourmelen/matlab/utillib) and modify your setmlibs so that your own code is at the beginning of the path. Once we have
+verified that the new code works using the example files we can merge it with the code in the insar_lab directory.  We need a system to control code changes such as CVS.
+
+I expect to continue working on MakeSimpleModel.m. Noel will merge his existing code with this and eventually incorporate our SBAS code (Noel wrote the graphics part.).
+
+regards
+
+Falk
+
+RELEASE_NOTES
+- Currently bounds are given in the *min file in the local (disloc) coordinate system. This is not good. Everything
+  should be given in geographic coordinates (lat/long) and then transformed into local systems for processing without the user feeling it.
+  For NOEL this means that for incorporating Coulomb all we need is a function to transform the input and output files from geogramphic to the COulmb coordinate
+  Display of the results should be done in geographic coordinates with PlotIgram,
+
+-The programming style is supposed to be similar to roi_pac in perl. In roi_pac we use
+       $restart and cleandir.pl .... 
+ and clearndir.pl is only run if $restart exists. 
+ In matlab we try to use e.g.
+      if Faults   PlotIgram(Faults); end
+ The defaults of the variable Faults is 'false' or 0 (logical) and no faults are plotted. However, 
+ if the variable Faults contains data 'if Faults' returns 'true' and the faults are plotted. This was the plan 
+ when I started. Unfortunatelty this does not always work. When the variable faults contains a NaN we get an error. At some places
+ I used if Faults(1) but this does not work either if Faults(1)=0 or Faults(1)=NaN.
+ Sometimes there is a need to check for fields in a structure or cells in a cellarray what causes problems. E.g. if Faults.xy gives an error if Faults.xy is not 
+ defined. What we probably need is a function
+    isdefined()     or
+    isnotemptynomatterwhat()
+ which first checks whether a variable exist, what type pf variable it is and then whether it contains something other than 'false'.
+  Once we have this function it should be used
+ throughout the entire code. An example of how ugly simple inquiries can become is
+    modellib/MakeBounds.m:if ~(~islogical(disloc_bounds) | disloc_bounds(1) ) && N_disloc
+ I wonder why matlab does not come with such a function. Please advice.
