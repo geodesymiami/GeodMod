@@ -1,0 +1,98 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+prepareopt.demfile                           =   strcat(getenv('GEODMOD_TESTDATA'),'/', 'Wells/Dem/wells_srtm3.dem')
+prepareopt.ShadedRelieffile                  =   strcat(getenv('GEODMOD_TESTDATA'),'/', 'Wells/Dem/wells_srtm3.dem.jpeg')
+%prepareopt.quakefile                         =   strcat(getenv('GEODMOD_TESTDATA'),'/', 'Wells/Quakes/wells_5_5_2008.dat.txt')
+%prepareopt.quakefileformat                   =   UNR
+prepareopt.quakefile                         =   strcat(getenv('GEODMOD_TESTDATA'),'/', 'Wells/Quakes/wells_xy.xls')
+prepareopt.quakefileformat                   =   UNR2
+%prepareopt.focalfile                         =   strcat(getenv('GEODMOD_TESTDATA'),'/', 'Wells/Quakes/wells_focal.txt')
+%prepareopt.focalfileformat                   =  Focal
+prepareopt.shapefile                         =  strcat(getenv('GEODMOD_TESTDATA'),'/', 'Wells/Lines/qfault_int-gldims5980510027/fltarc')
+prepareopt.faults_shapefile                  =  strcat(getenv('GEODMOD_TESTDATA'),'/', 'Wells/Lines/qfault_int-gldims5980510027/fltarc')
+prepareopt.faults_shapefile2                 =  strcat(getenv('GEODMOD_TESTDATA'),'/', 'Wells/Lines/mapped_and_new_faults_g83.shp')
+prepareopt.roads_shapefile                   =  strcat(getenv('GEODMOD_TESTDATA'),'/', 'Wells/Lines/elko_major_rds_g83.shp')
+%prepareopt.Shadefac                         =  0.1 
+prepareopt.CLim                              =  [-0.10 0.10]
+prepareopt.symbopt.Quakes.dep_ranges         = [0 10 16 ] 
+prepareopt.symbopt.Quakes.dep_symbols        = {'yo' 'ro'} 
+prepareopt.symbopt.Quakes.mag_ranges         = [1.0 5.9 ] 
+%prepareopt.symbopt.Quakes.mag_ranges         = [1.0 6.9] 
+prepareopt.symbopt.Quakes.mag_symbols        ={{'MarkerSize',5} {'MarkerSize',30}} 
+prepareopt.Profile.xy                        = [8 35 ; 30 20]
+prepareopt.marker1D{1}.lola                  = {'[-114.9078 41.2016]' 'vk' 'bedrock faults'} 
+prepareopt.marker1D{2}.lola                  = {'[-114.8905 41.1945]' 'vk' 'quaternary faults' } 
+%prepareopt.Cmap                             =  dismphF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+makesaropt.dir_inlist{1}                     = strcat(getenv('GEODMOD_TESTDATA'),'/', 'Wells/Data/EnvD2')
+makesaropt.dir_inlist{2}                     = strcat(getenv('GEODMOD_TESTDATA'),'/', 'Wells/Data/EnvA2')
+makesaropt.pattern                           =  geo*.unw
+makesaropt.subset.ji                         =  [475 500 512 512]          ;% LL
+makesaropt.data2igramopt.cormask_thresh.EnvD2=  0.17                  
+makesaropt.data2igramopt.cormask_thresh.EnvA2=  0.15                  
+%makesaropt.data2igramopt.MedFiltSize         =  3                  
+makesaropt.data2igramopt.cormask_area_open   =  100                  
+makesaropt.igram2motionopt.Unit              =  m 
+makesaropt.igram2motionopt.plotdataopt.Cmap  =  dismph 
+makesaropt.igram2motionopt.plotdataopt.Fringe=  1 
+%makesaropt.igram2motionopt.MedFiltSize      =  3
+makesaropt.samplesaropt.Method               =  Quadtree
+makesaropt.samplesaropt.Method               =  Grid
+makesaropt.samplesaropt.QtTolerance          =  0.01
+makesaropt.samplesaropt.QtStartlevel         =  4
+makesaropt.samplesaropt.QtEndlevel           =  6
+makesaropt.samplesaropt.GridRowsCols         =  [200 200]
+makesaropt.samplesaropt.GridRowsCols         =  [30 30]
+makesaropt.samplesaropt.GridRowsCols         =  [40 40]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%makegpsopt.GPStxtfile                        =  $GEODMOD_TESTDATA/Wells/Data/GPS/offsets_GB_new_formatted.txt
+%makegpsopt.GPSformat                         =  UNR-NOUP
+%makedatasetopt.GPShorz                       =  true
+makedatasetopt.sigphi.SAR{1}                  =  1.00
+makedatasetopt.sigphi.SAR{2}                  =  1.00
+%makedatasetopt.sigphi.GPShorz                =  100.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+modelopt.N_disloc                            =  1
+modelopt.N_multidisloc                       =  0
+
+inverseopt.disloc_bounds.xy (1:10,1)         =  [  9.0 3.00  6.5 -64.1 205.0   14.0   25.0  0.0  999 0.0 ]                 % constrained dip
+inverseopt.disloc_bounds.xy (1:10,2)         =  [ 15.0  7.0  9.5 -64.1 220.0   19.0   29.0  0.0  999 0.0 ]
+
+inverseopt.disloc_bounds.xy (1:10,1)         =  [  9.0 3.00  6.5 -70.9 205.0   14.0   25.0  0.0  999 0.0 ]                 % preferred solution
+inverseopt.disloc_bounds.xy (1:10,2)         =  [ 15.0  7.0  9.5 -25.9 220.0   19.0   29.0  0.0  999 0.0 ]
+
+%modelopt.multidislocopt                      = 2x1 Dip Wid
+%inverseopt.multidisloc_bounds.xy (1:12,1)    =  [  9.0 1.00  5.5 -64.1 205.0  15.0  20.0 0.0 0.1 0.0 -50.9 1.0 ]      % constrained dip in shallow disloc
+%inverseopt.multidisloc_bounds.xy (1:12,2)    =  [ 15.0  8.0  9.5 -64.1 220.0  30.0  33.0 0.0 2.0 0.0 -30.1 5.0 ]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+inverseopt.algorithm               =  Gibbs
+inverseopt.algorithm               =  Anneal
+inverseopt.FollowGradient          =  on
+inverseopt.rstate                  =  1
+inverseopt.annealopt               =  0
+%inverseopt.gibbsopt.Tschedopt     =  0
+inverseopt.gibbsopt.Tschedopt      =  [ -4.2  -4.2  4  4  10  1000 ]
+inverseopt.gibbsopt.Tschedopt      =  [ -2.8  -2.9  8  3  5   50  ]
+inverseopt.gibbsopt.Tschedopt      =  [ -3.5  -3.5  4  4  10  1000 ]
+%inverseopt.gibbsopt.Tschedopt      =  [ -3.7  -3.7  4  4  200 100000 ]
+inverseopt.gibbsopt.plot_bins      =  40
+inverseopt.gibbsopt.nsave          =  100
+inverseopt.PhaseRamp               =  on
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+inverseopt.distribopt.DoIt           =  on
+inverseopt.distribopt.ExtendSize     = [30 20]
+inverseopt.distribopt.PatchSize      = [1 1]
+%inverseopt.distribopt.ExtendSize     = off
+%inverseopt.distribopt.PatchSize      = off
+%inverseopt.distribopt.ExtendToSurface= off
+%inverseopt.distribopt.algorithm      = svd
+inverseopt.distribopt.kappa          = 0.09
+inverseopt.distribopt.PlotThresh     = 10
+inverseopt.distribopt.slip           = [0 1 0]
+inverseopt.distribopt.InverseSign    = off
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+plotthemodelopt.DoIt                 = on
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+plotsurface3dopt.DoIt                = on
+plotsurface3dopt.z_offset            = 0
+%plotsurface3dopt.viewdir             = [5 5]

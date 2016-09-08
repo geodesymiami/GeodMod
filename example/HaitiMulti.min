@@ -1,0 +1,132 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+prepareopt.demfile                           =   $DEMDIR/famelung/Haiti/Haiti.dem
+prepareopt.ShadedRelieffile                  =   $DEMDIR/famelung/Haiti/Haiti.dem.jpeg
+%prepareopt.quakefile                        =   strcat(getenv('GEODMOD_TESTDATA'),'/', 'Wells/Quakes/wells_xy.xls')
+prepareopt.quakefile                         =   $INSARLABHOME/geophys_data/Haiti/Quakes/Haiti_quakes.txt
+%prepareopt.linefile                          =   $INSARLABHOME/geophys_data/Haiti/Lines/caribbean_faults
+%prepareopt.linefile                          =   $INSARLABHOME/geophys_data/Haiti/Lines/Haitifaults
+prepareopt.faults_shapefile                  =   $INSARLABHOME/geophys_data/Haiti/Lines/Faultsforhaiti
+prepareopt.quakefileformat                   =   RSMAS-SHORT
+prepareopt.symbopt.Quakes.dep_ranges         = [0 20 26 ] 
+prepareopt.symbopt.Quakes.dep_symbols        = {'yo' 'ro'} 
+prepareopt.symbopt.Quakes.mag_ranges         = [1.0 5.5 6.9 10.0 ] 
+prepareopt.symbopt.Quakes.mag_symbols        ={{'MarkerSize',3} {'MarkerSize',7} {'MarkerSize',15}} 
+prepareopt.CLim                              =  [-0.25 0.25]
+%prepareopt.Profile.xy                        = [8 35 ; 30 20]
+%prepareopt.Cmap                             =  dismphF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%makesaropt.dir_inlist{1}                     = $WORKHOME_famelung/MODEL/Haiti/HaitiquakeT447AlosD/DONE/P*/geo_0*.unw  
+%makesaropt.dir_inlist{2}                     = $WORKHOME_famelung/MODEL/Haiti/HaitiquakeT137AlosA/DONE/geo_0*.unw  
+%makesaropt.dir_inlist{3}                     = $WORKHOME_famelung/MODEL/Haiti/HaitiquakeT138AlosA/DONEpsfilt_11616/P*/geo_0*.unw  
+makesaropt.dir_inlist{1}                      = $WORKHOME_famelung/MODEL/Haiti/sjonni/HaitiquakeT447AlosD/geo_0*.unw  
+makesaropt.dir_inlist{2}                      = $WORKHOME_famelung/MODEL/Haiti/sjonni/HaitiquakeT137AlosA/geo_0*.unw  
+makesaropt.dir_inlist{3}                      = $WORKHOME_famelung/MODEL/Haiti/sjonni/HaitiquakeT138AlosA/geo_0*.unw  
+#makesaropt.subset.ji                        =  [500 730 512 512]          ;% LL
+#makesaropt.subset.ji                        =  [50 400 1024 1024]          ;% LL
+%makesaropt.subset.ji                        =  [400 600 600 800]          ;% LL
+%makesaropt.subset.lalo                       =  [ 18.58 -72.7  512 512 ]
+%makesaropt.subset.lalo                       =  [ 18.58 -72.7  256 256 ]
+%makesaropt.subset.lalo                       =  [ 18.60 -73.15  600 1000 ]
+makesaropt.data2igramopt.cormask_thresh{1}   =  0.01                  
+makesaropt.data2igramopt.cormask_thresh{2}   =  0.15                  
+makesaropt.data2igramopt.cormask_thresh{3}   =  0.15                  
+makesaropt.data2igramopt.cormask_area_open   =  100                  
+makesaropt.data2igramopt.plotdataopt.CLim    =  [-3.14 3.14]                  
+makesaropt.igram2motionopt.RateMethod        =  Rand
+makesaropt.igram2motionopt.RateMethod        =  SimpleAverage
+makesaropt.igram2motionopt.NumStacks         =  40
+makesaropt.igram2motionopt.StackSortMethod   =  MeanRating
+makesaropt.igram2motionopt.Unit              =  m 
+makesaropt.igram2motionopt.plotdataopt.Cmap  =  dismph 
+makesaropt.igram2motionopt.plotdataopt.Fringe=  1 
+%makesaropt.igram2motionopt.MedFiltSize      =  3
+makesaropt.samplesaropt.Method               =  Grid
+makesaropt.samplesaropt.Method               =  Quadtree
+%%%%%%%%%%%%%%%% Tolerance 0.07 and EnLevel=8 works fine
+makesaropt.samplesaropt.QtTolerance          =  0.06
+makesaropt.samplesaropt.QtStartlevel         =  5
+makesaropt.samplesaropt.QtEndlevel           =  9
+makesaropt.samplesaropt.GridRowsCols         =  [100 100]
+makesaropt.samplesaropt.GridRowsCols         =  [200 200]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%makegpsopt.GPStxtfile                        =  strcat(getenv('GEODMOD_TESTDATA'),'/', 'Wells/Data/GPS/q')
+%makegpsopt.GPStxtfile                        =  strcat(getenv('GEODMOD_TESTDATA'),'/', 'Wells/Data/GPS/offsets_GB_new_formatted.txt')
+%makegpsopt.GPSformat                         =  UNR-NOUP
+%makedatasetopt.GPShorz                       =  true
+makedatasetopt.sigphi.SAR{1}                  =  1.00
+makedatasetopt.sigphi.SAR{2}                  =  1.00
+makedatasetopt.sigphi.SAR{3}                  =  1.00
+%makedatasetopt.sigphi.GPShorz               =  100.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+modelopt.N_disloc                            =  0
+modelopt.N_fault                             =  0
+modelopt.N_multidisloc                       =  1
+
+modelopt.multidislocopt                      =  HorzOff VertOff Len Wid Dip Strike ss ds
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     Len   Wid   Dep   Dip  Strike     xE     xN     ss  ds  op HorzOff VertOff   Len   Wid Dip     Strike  ss   ds   
+inverseopt.multidisloc_bounds.lola(1:18,1)   =  [  20.0  10.0  3.1 -140.1  269.9 -72.80  18.42  999.0 0.3 0.0  10      15.0    10.0  6.0 -140.0   269.9  0.1  0.1 ]     % 65 degree fault, at 5 km depth 
+inverseopt.multidisloc_bounds.lola(1:18,2)   =  [  20.0  10.0  8.1 -100.1  269.9 -72.80  18.50  999.0 2.0 0.0  10      15.0    10.0  6.0 -140.0   269.9  5.0  5.0 ]  
+
+modelopt.multidislocopt                      =  HorzOff VertOff Len Wid ss ds  HorzOff VertOff Len Wid  ss  ds
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     Len   Wid   Dep   Dip  Strike     xE     xN     ss  ds  op HorzOff VertOff   Len   Wid    ss   ds   HorzOff VertOff Len Wid ss  ds
+inverseopt.multidisloc_bounds.lola(1:22,1)   =  [  10.0  10.0  3.1 -140.1  269.9 -72.80  18.42  999.0 0.3 0.0  -999    0.0      5.0    10   0.1  0.1     -999     0     10  10 0.1 0.1   ] ;  % 65 degree fault, at 5 km depth  
+inverseopt.multidisloc_bounds.lola(1:22,2)   =  [  20.0  10.0  8.1 -100.1  269.9 -72.60  18.50  999.0 2.0 0.0  -999    0.0      5.0    10   5.0  5.0     -999     0     20  10 5.0 5.0   ] ;   
+
+modelopt.multidislocopt                      =  HorzOff VertOff ss ds  HorzOff VertOff  ss  ds
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     Len   Wid   Dep   Dip  Strike     xE     xN     ss  ds  op HorzOff VertOff   ss   ds   HorzOff VertOff ss  ds
+inverseopt.multidisloc_bounds.lola(1:18,1)   =  [  10.0  10.0  3.1 -140.1  265.9 -72.80  18.42  999.0 0.3 0.0  -999    0.0      0.1  0.1     -999     0   0.1 0.1   ] ;  % 65 degree fault, at 5 km depth  
+inverseopt.multidisloc_bounds.lola(1:18,2)   =  [  12.0  10.0  8.1 -100.1  275.9 -72.60  18.50  999.0 2.0 0.0  -999    0.0      5.0  5.0     -999     0   5.0 5.0   ] ;   
+
+modelopt.multidislocopt                      =  HorzOff VertOff Len Wid  ss  ds
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     Len   Wid   Dep   Dip  Strike     xE     xN     ss  ds  op HorzOff VertOff Len Wid   ss   ds   
+inverseopt.multidisloc_bounds.lola(1:16,1)   =  [  34.0  10.0  3.1 -130.1  259.9 -72.80  18.42  999.0 0.3 0.0  -20    0.0      5   5    0   0.1  ] ;  % one large dislocation plus one dip-slip patch
+inverseopt.multidisloc_bounds.lola(1:16,2)   =  [  42.0  10.0  8.1 -100.1  269.9 -72.60  18.50  999.0 1.0 0.0   20   10.0      5   5    0   5.0  ] ;   
+
+modelopt.multidislocopt                      =  HorzOff VertOff Len Wid  ss  ds
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     Len   Wid   Dep   Dip  Strike     xE     xN     ss  ds  op HorzOff VertOff Len Wid   ss   ds   
+inverseopt.multidisloc_bounds.lola(1:16,1)   =  [  34.0  10.0  3.1 -150.1  253.9 -72.80  18.42  999.0 0.3 0.0  -20    0.0      5   5    0   0.1  ] ;  % one large dislocation plus one dip-slip patch
+inverseopt.multidisloc_bounds.lola(1:16,2)   =  [  42.0  10.0  8.1 -100.1  269.9 -72.60  18.50  999.0 1.0 0.0   20   10.0      5   5    0   5.0  ] ;   
+
+modelopt.multidislocopt                      =  HorzOff VertOff Len Wid  ss  ds HorzOff VertOff Len Wid  ss  ds
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     Len   Wid   Dep   Dip  Strike     xE     xN     ss  ds  op HorzOff VertOff Len Wid   ss   ds   HorzOff VertOff Len Wid  ss  ds
+inverseopt.multidisloc_bounds.lola(1:22,1)   =  [  34.0  10.0  4.1 -150.1  262.9 -72.80  18.42  999.0 0.3 0.0  -20   -3.0      5   5    0   0.1      40   -3.0     5   5    0  0.1  ] ;  % one large dislocation plus one dip-slip patch
+inverseopt.multidisloc_bounds.lola(1:22,2)   =  [  42.0  10.0  8.1 -100.1  269.9 -72.60  18.50  999.0 1.0 0.0  -10    8.0      5   5    0   5.0      60    8.0     5   5    5  5.0  ] ;   
+
+%                                                xE   xN  Strike   Dip   Rake  Len   Top   Bot  Slip 
+inverseopt.fault_bounds.lola (1:9,1)        =  [-72.8 18.35  25.9    50   -179   30    3    12   999]                 % preferred solution
+inverseopt.fault_bounds.lola (1:9,2)        =  [-72.5 18.50 350.9    70    179   50    9    20   999]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+inverseopt.algorithm               =  Gibbs
+inverseopt.algorithm               =  Anneal
+inverseopt.FollowGradient          =  on
+inverseopt.rstate                  =  1
+inverseopt.annealopt               =  1
+%inverseopt.gibbsopt.Tschedopt     =  0
+inverseopt.gibbsopt.Tschedopt      =  [ -4.2  -4.2  4  4  10  1000 ]
+inverseopt.gibbsopt.Tschedopt      =  [ -2.8  -2.9  8  3  5   50  ]
+inverseopt.gibbsopt.Tschedopt      =  [ -3.5  -3.5  4  4  10  1000 ]
+%inverseopt.gibbsopt.Tschedopt      =  [ -3.7  -3.7  4  4  200 100000 ]
+inverseopt.gibbsopt.plot_bins      =  40
+inverseopt.gibbsopt.nsave          =  100
+inverseopt.PhaseRamp               =  Ramp
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+inverseopt.distribopt.DoIt           =  off
+inverseopt.distribopt.ExtendSize     = [50 20]
+inverseopt.distribopt.PatchSize      = [2 2]
+%inverseopt.distribopt.ExtendSize     = off
+%inverseopt.distribopt.PatchSize      = off
+%inverseopt.distribopt.ExtendToSurface= off
+%inverseopt.distribopt.algorithm      = svd
+inverseopt.distribopt.kappa          = 0.2
+inverseopt.distribopt.PlotThresh     = 0.1
+inverseopt.distribopt.slip           = [1 1 0]
+inverseopt.distribopt.InverseSign    = off
+inverseopt.distribopt.modelSjonni    = $WORKHOME_famelung/MODEL/Haiti/sjonni/modtot_Feb22.mat
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+plotthemodelopt.DoIt                 = off
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+plotsurface3dopt.DoIt                = off
+plotsurface3dopt.z_offset            = 0
+%plotsurface3dopt.viewdir             = [5 5]

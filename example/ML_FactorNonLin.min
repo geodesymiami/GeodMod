@@ -1,0 +1,67 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+dir_out_parent                               =  strcat(getenv('GEODMOD_TESTBENCH'))
+prepareopt.demfile                           =   strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Dem/hawaii_filled_0.00056.dem.asc.hgt')
+prepareopt.ShadedRelieffile                  =   strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Dem/hawaii_filled_0.00056.dem.jpeg')
+prepareopt.linefile                          =   strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Lines/hawaii_lines_new')
+prepareopt.quakefile                         =   strcat(getenv('GEODMOD_TESTDATA'),filesep,  'ML2002-2005/Quakes/hawaii-quakes-20020512-20051231_falk_modified.txt')
+%prepareopt.GPStxtfile                       =   strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Data/GPS/GPS_BenBrooks_03-05full.txt')
+prepareopt.Shadefac                          =  0.1 
+prepareopt.CLim                              =  [-0.05 0.05]
+prepareopt.symbopt.Quakes.dep_ranges         =[20 70] ;
+prepareopt.symbopt.Quakes.dep_symbols        ={'yo'} ; ;
+prepareopt.symbopt.Quakes.mag_ranges         =[2.2 3.0 9] ;
+prepareopt.symbopt.Quakes.mag_symbols        ={{'MarkerSize',0.1} {'MarkerSize',0.2}} ;
+%prepareopt.Cmap                             =  dismphF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+makesaropt.dir_inlist{1}                     =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Data/RsatD1/geo_010306-051011_1680_00114.unw' )
+makesaropt.dir_inlist{2}                     =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Data/RsatA6/geo_020121-050622_1248_00554.unw' )
+makesaropt.dir_inlist{3}                     =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Data/RsatD6/geo_011216-050330_1200_00370.unw' )
+makesaropt.dir_inlist{4}                     =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Data/RsatA3/geo_010422-060114_1728_00373.unw' )
+makesaropt.subset.ji                         =  [1250 650 512 512]          ;% LL
+makesaropt.data2igramopt.cormask_thresh      =  0.19                  
+makesaropt.data2igramopt.cormask_area_open   =  500                  
+makesaropt.igram2motionopt.tforstack         =  20020512
+makesaropt.igram2motionopt.RateMethod        =  Rand
+makesaropt.igram2motionopt.RateMethod        =  SimpleAverage
+makesaropt.igram2motionopt.NumStacks         =  40
+makesaropt.igram2motionopt.StackSortMethod   =  MeanRating
+%makesaropt.igram2motionopt.MedFiltSize      =  11
+makesaropt.samplesaropt.Method               =  Grid
+makesaropt.samplesaropt.Method               =  Quadtree
+makesaropt.samplesaropt.QtTolerance          =  0.002
+makesaropt.samplesaropt.QtStartlevel         =  2
+makesaropt.samplesaropt.GridRowsCols         =  [40 40]
+makesaropt.samplesaropt.GridRowsCols         =  [200 200]
+%makesaropt.samplesaropt.QtEndlevel          =  8
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+makegpsopt.GPStxtfile                       =   strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Data/GPS/GPS_BenBrooks_03-05full.txt')
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+makedatasetopt.GPShorz                       =  true
+makedatasetopt.GPSvert                       =  false
+makedatasetopt.sigphi                        =  1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+modelopt.N_disloc                            =  1
+modelopt.N_mogi                              =  1
+inverseopt.disloc_bounds.lola (1:10,1)       =  [  4.0  4.0  1.0  -89.9 25.0 -155.62  19.42  0.0  0.0 999  ];
+inverseopt.disloc_bounds.lola (1:10,2)       =  [ 12.0 12.0  5.0  -69.9 35.0 -155.58  19.47  0.0  0.0 999  ];
+inverseopt.mogi_bounds.lola(1:4,1)           =  [ -155.62 19.43  2.0  999 ]                                   ; %lower bound
+inverseopt.mogi_bounds.lola(1:4,2)           =  [ -155.58 19.46  6.0  999 ]      
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+inverseopt.algorithm               =  Gibbs
+inverseopt.algorithm               =  Anneal
+inverseopt.FollowGradient          =  on
+inverseopt.rstate                  =  1
+inverseopt.annealopt               =  0
+%inverseopt.gibbsopt.Tschedopt     =  0
+inverseopt.gibbsopt.Tschedopt      =  [ -4.2  -4.2  4  4  10  1000 ]
+inverseopt.gibbsopt.Tschedopt      =  [ -3.8  -2.9  8  3  5   50  ]
+inverseopt.gibbsopt.nsave          =  100
+inverseopt.PhaseRamp               =  on
+inverseopt.FactorNonLin            =  SARmul
+inverseoptlin.DoInverseLin         =  off
+inverseoptlin.DoIt                 =  off
+inverseoptlin.ExtendSize           =  off
+inverseoptlin.ExtendToSurface      =  off
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+plotthemodelopt.DoIt               =  off
+%plotthemodelopt.SaveModelEnu       =  ML2002-2005

@@ -1,0 +1,44 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+dir_out_parent                               =  strcat(getenv('GEODMOD_TESTBENCH'))
+%prepareopt.demfile                          =  /RAID6/insar_lab/testdata/geodmod/Darwin/Dem/baker_Galapagos_SRTM_darwin.dem.asc.hgt
+%prepareopt.ShadedRelieffile                 =  /RAID6/insar_lab/testdata/geodmod/Darwin/Dem/baker_Galapagos_SRTM_darwin.dem.jpeg
+prepareopt.demfile                           =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'Darwin/Dem/baker_Galapagos_SRTM_darwin.dem.asc.hgt')
+prepareopt.ShadedRelieffile                  =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'Darwin/Dem/baker_Galapagos_SRTM_darwin.dem.jpeg')
+prepareopt.CLim                              =  [-0.1 0.1]
+%prepareopt.Profile.xy                          =  [11 5 ; 24 25]
+%prepareplotopt.Cmap                         =  dismphF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+makesaropt.dir_inlist{1}                     =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'Darwin/Data/ErsD')
+makesaropt.pattern                           =  geo*darwin.unw
+makesaropt.data2igramopt.cormask_thresh      =  0.14
+makesaropt.data2igramopt.cormask_area_open   =  500
+makesaropt.igram2motionopt.RateMethod        =  Rand
+makesaropt.igram2motionopt.RateMethod        =  SimpleAverage
+makesaropt.igram2motionopt.NumStacks         =  40
+makesaropt.igram2motionopt.StackSortMethod   =  MeanRating
+%makesaropt.igram2motionopt.MedFiltSize       =  11
+makesaropt.igram2motionopt.Unit              =  m 
+makesaropt.samplesaropt.Method               =  Grid
+makesaropt.samplesaropt.Method               =  Quadtree
+makesaropt.samplesaropt.QtTolerance          =  0.01
+makesaropt.samplesaropt.QtStartlevel         =  3
+makesaropt.samplesaropt.GridRowsCols         =  [30 30]
+makesaropt.samplesaropt.QtEndlevel           =  7
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+makedatasetopt.sigphi                        =  1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+modelopt.N_disloc                            =  0
+modelopt.N_mogi                              =  1
+inverseopt.mogi_bounds.xy(1:4,1)             =  [ 10.0  10.0  2.0   999 ]                                   ; %lower bound
+inverseopt.mogi_bounds.xy(1:4,2)             =  [ 20.0  20.0  6.0   999 ]                                   ; %lower bound
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+inverseopt.algorithm                         =  Gibbs 
+inverseopt.gibbsopt.Tschedopt                =  [ -3.8  -2.9  8  3  5   50  ]
+inverseopt.gibbsopt.Tschedopt                =  [ -5.9  -3.5  8  4  100  5000 ]
+inverseopt.gibbsopt.Tschedopt                =  [ -5.0  -3.2  4  4  100  5000 ]
+inverseopt.annealopt                         =  0 
+inverseopt.FollowGradient                    =  true
+inverseopt.rstate                            =  1
+inverseopt.PhaseRamp                         =  off
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+plotthemodelopt.DoIt                         =  on 

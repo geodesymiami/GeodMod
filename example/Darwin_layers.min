@@ -1,0 +1,44 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+dir_out_parent                               =  /RAID1/mbagnardi/development/mimic/geodmod/distribution_testing
+prepareopt.demfile                           =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'Darwin/Dem/baker_Galapagos_SRTM_darwin.dem.asc.hgt')
+prepareopt.ShadedRelieffile                  =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'Darwin/Dem/baker_Galapagos_SRTM_darwin.dem.jpeg')
+prepareopt.CLim                              =  [-0.1 0.1]
+%prepareopt.Profile.xy                          =  [11 5 ; 24 25]
+%prepareplotopt.Cmap                         =  dismphF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+makesaropt.dir_inlist{1}                     =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'Darwin/Data/ErsD')
+makesaropt.pattern                           =  geo*darwin.unw
+makesaropt.data2igramopt.cormask_thresh    =  0.14
+makesaropt.data2igramopt.cormask_area_open =  500
+makesaropt.igram2motionopt.RateMethod        =  Rand
+makesaropt.igram2motionopt.RateMethod        =  SimpleAverage
+makesaropt.igram2motionopt.NumStacks         =  40
+makesaropt.igram2motionopt.StackSortMethod   =  MeanRating
+%makesaropt.igram2motionopt.MedFiltSize       =  5
+makesaropt.igram2motionopt.Unit              =  m 
+makesaropt.samplesaropt.Method               =  Quadtree
+makesaropt.samplesaropt.Method               =  Grid
+makesaropt.samplesaropt.QtTolerance          =  0.01
+makesaropt.samplesaropt.QtStartlevel         =  3
+makesaropt.samplesaropt.GridRowsCols         =  [30 30]
+makesaropt.samplesaropt.QtEndlevel           =  7
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%makedatasetopt.sigphi                        =  1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+modelopt.dislocopt.nu = 0.25                        % Poisson's ratio
+modelopt.Layers = [0.5]                    % Thickness of top layers above half space e.g. [0.5 1.0 1.5 2.0]
+modelopt.layeropt.YoungMod_layers = [50 100]         % Young's modulus for layers and halfspace (last value= half-space)
+modelopt.layeropt.scaleN = 1                        % For normal problems set to 1
+
+modelopt.N_disloc                            =  0
+modelopt.N_mogi                              =  1
+inverseopt.mogi_bounds.xy(1:4,1)             =  [ 10.0  10.0  2.0   999 ]                                   ; %lower bound
+inverseopt.mogi_bounds.xy(1:4,2)             =  [ 20.0  20.0  6.0   999 ]                                   ; %lower bound
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+inverseopt.algorithm                         =  Anneal 
+inverseopt.annealopt                         =  0 
+inverseopt.FollowGradient                    =  true
+inverseopt.rstate                            =  1
+inverseopt.PhaseRamp                         =  off
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+plotthemodelopt.DoIt                         =  on 

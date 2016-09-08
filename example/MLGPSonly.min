@@ -1,0 +1,27 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+dir_out_parent                               =  strcat(getenv('GEODMOD_TESTBENCH'))
+prepareopt.demfile                           =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'MLGPSonly/Dem/hawaii_filled_0.00056.dem.asc.hgt')
+prepareopt.ShadedRelieffile                  =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'MLGPSonly/Dem/hawaii_filled_0.00056.dem.jpeg')
+prepareopt.linefile                          =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'MLGPSonly/Lines/hawaii_lines_new')
+%prepareopt.subset.ji                            =  [ 1 1     2525 2393]         % LL
+prepareopt.subset.ji                            =  [1250 650  512 512]          % LL
+prepareopt.Shadefac                          =  0.1 
+prepareopt.CLim                              =  [-0.05 0.05]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+makegpsopt.GPStxtfile              =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'MLGPSonly/Data/GPS/GPS_BenBrooks_03-05full.txt')
+makegpsopt.filetype                =  rates
+makedatasetopt.GPShorz             =  true
+makedatasetopt.GPSvert             =  false
+makedatasetopt.sigphi              =  1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+modelopt.N_disloc                  =  1
+inverseopt.disloc_bounds.xy (1:10,1)  =  [  4.0  4.0  1.0  -89.9 25.0  10.0  10.0  0.0  0.0 999  ]
+inverseopt.disloc_bounds.xy (1:10,2)  =  [ 12.0 12.0  5.0  -89.9 35.0  20.0  20.0  0.0  0.0 999  ]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+inverseopt.algorithm               =  Anneal
+inverseopt.FollowGradient          =  on
+inverseopt.rstate                  =  1
+inverseopt.annealopt               =  0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+plotthemodelopt.DoIt               =  on
+%plotthemodelopt.SaveModelEnu      =  test2002

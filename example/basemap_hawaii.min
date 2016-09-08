@@ -1,0 +1,18 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+dir_out_parent                               =  strcat(getenv('GEODMOD_TESTBENCH'))
+prepareopt.demfile                           =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Dem/hawaii_filled_0.00056.dem.asc.hgt')
+prepareopt.ShadedRelieffile                  =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Dem/hawaii_filled_0.00056.dem.jpeg')
+prepareopt.linefile                          =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Lines/hawaii_lines_new')
+prepareopt.quakefile                         =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Quakes/hawaii-quakes-20020512-20051231_falk_modified.txt')
+%prepareopt.GPStxtfile                       =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Data/GPS_BenBrooks_03-05full.txt')
+prepareopt.ShadeOnly                         =  'on' 
+prepareopt.CLim                              =  [-0.05 0.05]
+prepareopt.symbopt.Quakes.dep_ranges         =[20 70] ;
+prepareopt.symbopt.Quakes.dep_symbols        ={'yo'} ; ;
+prepareopt.symbopt.Quakes.mag_ranges         =[2.2 3.0 9] ;
+prepareopt.symbopt.Quakes.mag_symbols        ={{'MarkerSize',0.1} {'MarkerSize',0.2}} ;
+%prepareopt.Cmap                             =  dismphF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+makesaropt.data2igramopt.DoIt              =  false
+makesaropt.data2igramopt.subset.ji            =  [900  400 1300 1600]         ;% LL for ML and Kilauea
+plotthemodelopt.DoIt                         =  'off'
