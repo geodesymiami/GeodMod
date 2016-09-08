@@ -1,0 +1,94 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%geodmod - geodetic modelling software
+%Falk Amelung, University of Miami, March 2008
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%QUICK SUMMARY FOR DARWIN VOLCANO ONLY:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% from matlab command line:
+localdir = pwd;
+url      = 'http://www.rsmas.miami.edu/personal/famelung/geodmod/';
+untar( [url 'geodmod.tgz'],    localdir);
+untar( [url 'testdata_geodmod_darwin.tgz'],localdir);
+tmp=dir(['geo*']);
+geodmod_latest=tmp(end).name;
+setenv('GEODMODHOME'     ,[localdir filesep geodmod_latest]);
+setenv('GEODMOD_TESTDATA',[localdir filesep 'testdata_geodmod']);
+disp('Setting paths for geodmod...');
+run( [ getenv('GEODMODHOME') filesep 'addpath_geodmod'] );
+geodmod Darwin.min
+gclean all
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% if this was succesful complete the installation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+disp('This testdata file is about 1 Gb..., please have patience')
+untar( [url 'testdata_geodmod.tgz'],localdir);        % from matlab command line, gets the entire testdata set (1Gb)
+test_geodmod 'all'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The produced output should be similar to:
+http://www.rsmas.miami.edu/personal/famelung/Etna_2005-2006/
+http://www.rsmas.miami.edu/personal/famelung/Etna_1997-1998/
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%modify the startup scripts:
+0. Determine the geodmod version:
+set geodmod_latest=`ls -dr geodmod* | head -1`
+
+1. Add to your .cshrc:
+setenv GEODMODHOME      ~/geodmod_latest      
+setenv GEODMOD_TESTDATA ~/testdata_geodmod      
+setenv TESTBENCH        ~/TEST
+
+2. Add to your startup.m file: 
+disp('Setting paths for geodmod...')
+run( [ getenv('GEODMODHOME') filesep 'addpath_geodmod'] )
+
+3. Test the installation:
+ 
+test_geodmod
+test_geodmod 'all'
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%      Alternative from linux command line                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+FIRST STEP:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+You first need to untar the geodmod and sbas tar balls and the testdata
+tar xvf geodmod.tgz
+tar xvf sbas.tgz
+tar xvf testdata_geodmod.tgz
+
+(Note 1: tar xvf testdata_geodmod_darwin.tar if you have downloaded only the data for Darwin volcano)
+(Note 2: the sbas.tgz ball has actually a different purpose. It includes some files that are currently
+needed by geodmod. In furture versions these files will be directly included into geodmod)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+SECOND STEP:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Now you need to set the GEODMODHOME environment variable and run the function
+addpath_geodmod. 
+
+1. Add to your .cshrc:
+setenv GEODMODHOME      ~/geodmod_version_3_2_2      
+setenv GEODMOD_TESTDATA ~/testdata_geodmod      
+setenv SBASHOME      ~/sbas_version_0_5      
+
+2. Add to your startup.m file: 
+disp('Setting paths for geodmod...')
+run( [ getenv('GEODMODHOME') filesep 'addpath_geodmod'] )
+run( [ getenv('SBASHOME')    filesep 'addpath_sbas'] )
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+THIRD STEP:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% test your geodmod distribution
+
+ test_geodmod        
+ test_geodmod 'all' 
+
