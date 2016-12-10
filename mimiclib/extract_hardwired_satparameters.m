@@ -27,6 +27,7 @@ switch parameter
         switch sat
             case{'Rsat','Ers','Env'};  wavelength = 0.056 ;
             case{'Alos','Jers'};       wavelength = 0.236 ;
+            case{'Csk'};       wavelength = 0.0312283810416667 ;  %Anieri 5/16
         end
         satparameter=wavelength;
     case {'sat_height'}
@@ -35,6 +36,7 @@ switch parameter
             case{'Rsat'};             sat_height = 793000 ;
             case{'Jers'};             sat_height = 574000 ;
             case{'Alos'};             sat_height = 700000 ;
+            case{'Csk'};             sat_height = 625844.2166 ;  %Anieri 5/16
         end
         satparameter=sat_height;
     case {'LOSvector','incangle','azimuth'}
@@ -59,6 +61,9 @@ switch parameter
             case{'EnvA2'};              incangle = 23.0/180*pi ; if ~exist ('azimuth','var') azimuth =   -11/180*pi ;  end
             case{'EnvA6'};              incangle = 41.0/180*pi ; if ~exist ('azimuth','var') azimuth =   -11/180*pi ;  end
             case{'EnvD7'};              incangle = 43.9/180*pi ; if ~exist ('azimuth','var') azimuth =  -169/180*pi ;  end   
+
+            case{'CskA'};              offnadir = 33.6/180*pi ; if ~exist ('azimuth','var') azimuth =  -11.7/180*pi ;  end   %Anieri 5/16 verify offnadir = average lookangle
+            case{'CskD'};              offnadir = 34.8/180*pi ; if ~exist ('azimuth','var') azimuth = -168.3/180*pi ;  end   %Anieri 5/16 verify offnadir = average lookangle
                 
             case{'JersD'};              offnadir = 35.0/180*pi ; if ~exist ('azimuth','var') azimuth =  -169/180*pi ;  end
             case{'AlosD'};              offnadir = 34.3/180*pi ; if ~exist ('azimuth','var') azimuth =-167.8/180*pi ;  end
