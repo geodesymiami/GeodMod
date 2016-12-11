@@ -47,7 +47,7 @@ sqrflag = true;
 par     = npar;
 
 if strcmp(dataset(1).CoordSystem,'ProjectProfile')
-   data=dataset(:).datavec ;  
+   data=dataset(:).datavec;  
    disp('NOEL: plot data and pred ! ');
    plotmodelopt.y_unit = dataset.Unit ;
    logplot('PlotProfile',out_name,dataset.coord(1,:),[data;pred'],plotmodelopt);
@@ -104,6 +104,8 @@ end
 
 if ~modulo      modulo = Fringe;     end
 if ~modulo_res  modulo_res = Fringe; end
+
+%modulo = modulo * 4;       % FA 12/2016  test to improve CSK plots
 
 ClimGrid=[-modulo/56 modulo] ;   ClimGrid_res=[-modulo_res/56 modulo_res];
 %modulo=0; %ClimGrid=[-0.05 0.05];   ClimGrid_res=[-0.05 0.05];
@@ -223,11 +225,11 @@ if nargout>=1
 end
 if nargout>=2
      predout=[];
-     if SAR_1 predout(1).data=flipud(pred_1);        end
-     if SAR_2 predout(2).data=flipud(pred_2);        end
-     if SAR_3 predout(3).data=flipud(pred_3);        end
-     if SAR_4 predout(4).data=flipud(pred_4);        end
-     if SAR_5 predout(5).data=flipud(pred_5);        end
+     if SAR_1 predout(1).data=flipud(pred_1.*amp_1); end     % FA 12/2016: included amp_1 to mask
+     if SAR_2 predout(2).data=flipud(pred_2.*amp_2); end
+     if SAR_3 predout(3).data=flipud(pred_3.*amp_3); end
+     if SAR_4 predout(4).data=flipud(pred_4.*amp_4); end
+     if SAR_5 predout(5).data=flipud(pred_5.*amp_5); end
 end
 % TODO: Instead of interpolating u and pred based on dataset(1) coordinates I should recalculate on a dense grid
 if nargout>=3

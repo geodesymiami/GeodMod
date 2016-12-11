@@ -148,6 +148,7 @@ if ~exist(dir_out,'dir')  mkdir(dir_out) ; end
  
  if  isfield(inverseopt,'distribopt'); inverseopt.plotdataopt.distribopt = inverseopt.distribopt; end                          % FA 9/08: makes PlotThresh is available in plotsurface3d
  if  isfield(inverseopt,'QuickStop') && strcmp(inverseopt.QuickStop,'on'); inverseopt.distribopt.DoIt=0; plotthemodelopt.DoIt=false;plotsurface3dopt.DoIt = false; end
+ if  isfield(plotthemodelopt,'DoIt') && strcmp(plotthemodelopt.DoIt,'off'); plotsurface3dopt.DoIt = false; end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                            %
 % now make InSAR,GPS data. Prepare dataset.  %
