@@ -17,15 +17,13 @@ function [outfiles] = ListFiles(infiles)
 % 
 % FA March 2008: Adjusted for Windows
 
-tmpstr = ls(infiles) ;  tmpcellarray1 = textscan(tmpstr,'%s') ;  tmpcellarray2= tmpcellarray1{1} ;
+tmpstr = ls(infiles) ; 
+tmpcellarray1 = textscan(tmpstr,'%s') ;  tmpcellarray2= tmpcellarray1{1} ;
+
+tmp    = dir(infiles);
 
 [pathstr,name,ext] = fileparts(infiles);
 
-for ni=1:size(tmpcellarray2,1)
-    [j, name,ext] = fileparts(tmpcellarray2{ni});         % stripping off path because of liunx-windows problem (j is empty under Windows)
-    if ~isempty(j)
-        outfiles(ni).name   = fullfile(j,[name ext]);
-    else
-        outfiles(ni).name   = fullfile(pathstr,[name ext]);   % putting back path (under linux pathstr equals j but not under Windows)
-    end
+for ni=1:size(tmp,1)
+        outfiles(ni).name   = fullfile(pathstr,tmp(ni).name);   
 end

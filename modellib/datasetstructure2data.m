@@ -45,7 +45,7 @@ else
    normalization=[];
 
    if D_1 NORM_1=isfield(dataset(1),'normalization') && ~ isempty(dataset(1).normalization); end
-   if D_2 NORM_2=isfield(dataset(2),'normalization') &&~ isempty(dataset(2).normalization); end
+   if D_2 NORM_2=isfield(dataset(2),'normalization') && ~ isempty(dataset(2).normalization); end
    if D_3 NORM_3=isfield(dataset(3),'normalization') && ~ isempty(dataset(3).normalization); end
    if D_4 NORM_4=isfield(dataset(4),'normalization') && ~ isempty(dataset(4).normalization); end
    if D_5 NORM_5=isfield(dataset(5),'normalization') && ~ isempty(dataset(5).normalization); end
