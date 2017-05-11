@@ -101,7 +101,7 @@ pred = [ G_sources  G_phaseramp ] * m;                                      % ca
 pred = sum(pred,2);                                                         % sums the LOS changes for all sources
 
 %%%%%%%% calculate the (weighted) difference between data and model %%%%%%%
-resi = (pred-d) .* weight;
+resi = (pred-d) .* weight;                                                  % FA 5/2017: For sqrflag this is chi^2 if weight=sigma
 % resi = (pred-d) ./ sqrt(normalization);
 if sqrflag;   resi=resi'*resi;   end                                        % Residual vector or sum or squares?
 
@@ -116,38 +116,16 @@ if  nargout < 4;  return;  end
 
 % Calculate the regular RMS to be used in plotting program
 if  nargout >= 4
-    i=1; ind=[1:datind(1)];                       res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res/length(ind)) ;
-    if D_2;  i=2; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res/length(ind)) ; end
-    if D_3;  i=3; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res/length(ind)) ; end
-    if D_4;  i=4; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res/length(ind)) ; end
-    if D_5;  i=5; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res/length(ind)) ; end
-    if D_6;  i=6; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res/length(ind)) ; end
-    if D_7;  i=7; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res/length(ind)) ; end
-    if D_8;  i=8; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res/length(ind)) ; end
-    i=1; ind=[1:datind(1)];                       res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res) ;
-    if D_2;  i=2; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res) ; end
-    if D_3;  i=3; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res) ; end
-    if D_4;  i=4; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res) ; end
-    if D_5;  i=5; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res) ; end
-    if D_6;  i=6; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res) ; end
-    if D_7;  i=7; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res) ; end
-    if D_8;  i=8; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) .*weight(ind); rms(i)=sqrt(res'*res) ; end
-%     i=1; ind=[1:datind(1)];                       res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res/length(ind)) ;
-%     if D_2;  i=2; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res/length(ind)) ; end
-%     if D_3;  i=3; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res/length(ind)) ; end
-%     if D_4;  i=4; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res/length(ind)) ; end
-%     if D_5;  i=5; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res/length(ind)) ; end
-%     if D_6;  i=6; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res/length(ind)) ; end
-%     if D_7;  i=7; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res/length(ind)) ; end
-%     if D_8;  i=8; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res/length(ind)) ; end
-%     i=1; ind=[1:datind(1)];                       res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res) ;
-%     if D_2;  i=2; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res) ; end
-%     if D_3;  i=3; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res) ; end
-%     if D_4;  i=4; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res) ; end
-%     if D_5;  i=5; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res) ; end
-%     if D_6;  i=6; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res) ; end
-%     if D_7;  i=7; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res) ; end
-%     if D_8;  i=8; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ./sqrt(normalization(ind)); rms(i)=sqrt(res'*res) ; end
+    normweight=weight/sum(weight);
+    rms_weighted  = sqrt(sum((pred-d).*(pred-d)./normweight));
+             i=1; ind=[1:datind(i)];              rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); 
+    if D_2;  i=2; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); end
+    if D_3;  i=3; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); end
+    if D_4;  i=4; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); end
+    if D_5;  i=5; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); end
+    if D_6;  i=6; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); end
+    if D_7;  i=7; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); end
+    if D_8;  i=8; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); end
 end
 
 % Calculate the model parameters
@@ -206,20 +184,11 @@ if  nargout >= 6
     if D_7;   i=7; ind=[datind(i-1)+1:datind(i)];  Wper = [Wper ; sum(W(ind))];  end ;
     if D_8;   i=8; ind=[datind(i-1)+1:datind(i)];  Wper = [Wper ; sum(W(ind))];  end ;
     Wper = Wper/sum(Wper)*100;
-%     W=1./sqrt(normalization);
-%     i=1; ind=[            1:datind(i)];  Wper = [       sum(W(ind))];
-%     if D_2;   i=2; ind=[datind(i-1)+1:datind(i)];  Wper = [Wper ; sum(W(ind))];  end ;
-%     if D_3;   i=3; ind=[datind(i-1)+1:datind(i)];  Wper = [Wper ; sum(W(ind))];  end ;
-%     if D_4;   i=4; ind=[datind(i-1)+1:datind(i)];  Wper = [Wper ; sum(W(ind))];  end ;
-%     if D_5;   i=5; ind=[datind(i-1)+1:datind(i)];  Wper = [Wper ; sum(W(ind))];  end ;
-%     if D_6;   i=6; ind=[datind(i-1)+1:datind(i)];  Wper = [Wper ; sum(W(ind))];  end ;
-%     if D_7;   i=7; ind=[datind(i-1)+1:datind(i)];  Wper = [Wper ; sum(W(ind))];  end ;
-%     if D_8;   i=8; ind=[datind(i-1)+1:datind(i)];  Wper = [Wper ; sum(W(ind))];  end ;
-%     Wper = Wper/sum(Wper)*100;
 end
 
-% Calculate the RMS for unit sigmas
+% Calculate the RMS 
 if  nargout >= 7
+    % for unit sigmas
     i=1; ind=[1:datind(1)];                       res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ;
     if D_2;  i=2; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ; end
     if D_3;  i=3; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ; end
@@ -228,6 +197,10 @@ if  nargout >= 7
     if D_6;  i=6; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ; end
     if D_7;  i=7; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ; end
     if D_8;  i=8; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ; end
+    % weighted RMS
+    i=1; ind=[1:datind(1)];                       res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ;
+    if D_2;  i=2; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ; end
+    if D_3;  i=3; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ; end
 end
 
 % Return mlin
