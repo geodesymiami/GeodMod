@@ -68,10 +68,10 @@ G_nonlinearsources = [ G_sources(:,~linearsourceind)];                      % de
 %%% Yunjun, 2015-12-03: Using weight in the same way as dMODELS.
 stdRW = 0.0005;                                                             % random walk noise StDev for leveling [0.5 mm/sqrt(yr)], from dMODELS
 yrRW = 1;                                                                   % yrw Time interval in years, from dMODELS
-SigRW = stdRW^2*yrRW.*ones(size(sigma));
-Sig = sigma.^2 + SigRW;
+SigRW_squared = stdRW^2*yrRW.*ones(size(sigma));
+Sig_squared = sigma.^2 + SigRW_squared;
 %Sig = sigma.^2 ;                                                           % FA 5/2017: This would be without random walk component
-weight = 1./Sig;
+weight = 1./Sig_squared;
 
     % FA 5/2017: the following lines are from dmodels. I verified that weight=WH.
     % SigWN = diag(sigma.^2);                                                     % diagonal covariance matrix, m^2
@@ -80,7 +80,7 @@ weight = 1./Sig;
     % WH = SigH\eye(size(SigH));                                                  % weight for least square, 1/m^2 (equivalent to inv(SigH))
 
 mlin = [G_linearsources G_phaseramp] \ ...
-       ((d - sum(G_nonlinearsources,2)).*sqrt(weight));          %FA 5/2017: did Yunjun added this? It was 'weight' but changed to sqrt(weight) as we have removed sigma=sigma^2 in datasetstructure2data.m
+       ((d - sum(G_nonlinearsources,2)).weight);                 %FA 5/2017: keep as 'weight' instead of 'sqrt(weight)' as squaring operation  (e.resi'*resi) will not be performed
 % mlin = [G_linearsources G_phaseramp] \ ...
 %     ((d - sum(G_nonlinearsources,2))./sqrt(normalization));    %FA 2/2010  takes weighting into account. Important if different datasets have different weight. Not fully verified - need to check equation !
 %     mlin = [G_linearsources G_phaseramp] \ ...

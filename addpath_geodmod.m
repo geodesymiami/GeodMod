@@ -21,7 +21,7 @@ libdir = [ getenv('GEODMODHOME') filesep 'maintenancelib'      ];  addpath(genpa
 libdir = [ getenv('GEODMODHOME') filesep 'deformation_sources' ];  addpath(genpath(libdir),'-end'); logmessage(libdir)
 libdir = [ getenv('GEODMODHOME') filesep 'mex'                 ];  addpath(genpath(libdir),'-end'); logmessage(libdir)
 libdir = [ getenv('GEODMODHOME') filesep 'inver'               ];  addpath(genpath(libdir),'-end'); logmessage(libdir)
-libdir = [ getenv('GEODMODHOME') filesep 'distribution_testing'];  addpath(genpath(libdir),'-end'); logmessage(libdir)
+libdir = [ getenv('GEODMODHOME') filesep 'examples'            ];  addpath(genpath(libdir),'-end'); logmessage(libdir)
 
 %opengl software; logmessage('opengl set to software (at RSMAS)');
 CheckToolboxes();
