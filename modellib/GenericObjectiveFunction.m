@@ -11,8 +11,8 @@ function [resi,pred,u,rms,npar,Wper,rms_unitsig,mlin,dataset_mod] = ...
 %		normalization   - (1x1)
 %		fixind          - indices of fixed model parameters
 %		fixpar          - the value of the fixed parameters
-%		sqrflag         - 1 - the norm of the residual vector is returned
-%                         0 - the residual vector is returned (for LEASTSQ).
+%		sqrflag         - 1: the norm of the residual vector (chi_squared is returned)
+%                                 0: the residual vector is returned (for lsqnonlin).
 %
 %       objfuncopt      - option for objective function:
 %       modelopt        - structure with model specifications
@@ -65,28 +65,24 @@ G_linearsources    = [ G_sources(:, linearsourceind)];                      % de
 G_nonlinearsources = [ G_sources(:,~linearsourceind)];                      % design matrix for nonlienar sources
 
 %%%%%%%%%%% Linear Inversion %%%%%%%%%%%%%%
-% weight = 1./normc(normalization);
-% weight = weight./sum(weight);
-% weight = ones(size(normalization));
 %%% Yunjun, 2015-12-03: Using weight in the same way as dMODELS.
 stdRW = 0.0005;                                                             % random walk noise StDev for leveling [0.5 mm/sqrt(yr)], from dMODELS
 yrRW = 1;                                                                   % yrw Time interval in years, from dMODELS
 SigRW = stdRW^2*yrRW.*ones(size(sigma));
 Sig = sigma.^2 + SigRW;
+%Sig = sigma.^2 ;                                                           % FA 5/2017: This would be without random walk component
 weight = 1./Sig;
-% weight = 1./sqrt(sigma);
-% k0=0;
-% for i = 1:length(dataset)
-%     k1=dataset(i).Ndata+k0;
-%     weight_i = sum(weight(k0+1:k1));
-%     disp(['Total Weight of ',dataset(i).DataSet,': ',num2str(weight_i)]);
-%     k0 = k1;
-% end
+
+    % FA 5/2017: the following lines are from dmodels. I verified that weight=WH.
+    % SigWN = diag(sigma.^2);                                                     % diagonal covariance matrix, m^2
+    % SigRW = stdRW^2*yrRW*eye(size(SigWN));                                         % random walk noise in m^2, (0.5 mm/sqrt(yr))
+    % SigH  = SigWN + SigRW;   
+    % WH = SigH\eye(size(SigH));                                                  % weight for least square, 1/m^2 (equivalent to inv(SigH))
 
 mlin = [G_linearsources G_phaseramp] \ ...
-       ((d - sum(G_nonlinearsources,2)).*weight);
+       ((d - sum(G_nonlinearsources,2)).*sqrt(weight));          %FA 5/2017: did Yunjun added this? It was 'weight' but changed to sqrt(weight) as we have removed sigma=sigma^2 in datasetstructure2data.m
 % mlin = [G_linearsources G_phaseramp] \ ...
-%     ((d - sum(G_nonlinearsources,2))./sqrt(normalization));                 %FA 2/2010  takes weighting into account. Important if different datasets have different weight. Not fully verified - need to check equation !
+%     ((d - sum(G_nonlinearsources,2))./sqrt(normalization));    %FA 2/2010  takes weighting into account. Important if different datasets have different weight. Not fully verified - need to check equation !
 %     mlin = [G_linearsources G_phaseramp] \ ...
 %           (d - sum(G_nonlinearsources,2));
 
@@ -100,10 +96,13 @@ pred = [ G_sources  G_phaseramp ] * m;                                      % ca
 %pred = [ G_sources ] * m;  
 pred = sum(pred,2);                                                         % sums the LOS changes for all sources
 
-%%%%%%%% calculate the (weighted) difference between data and model %%%%%%%
-resi = (pred-d) .* weight;                                                  % FA 5/2017: For sqrflag this is chi^2 if weight=sigma
-% resi = (pred-d) ./ sqrt(normalization);
-if sqrflag;   resi=resi'*resi;   end                                        % Residual vector or sum or squares?
+%%%%%%%% calculate the weighted residual vector and chi_squared  %%%%%%%
+resi = (pred-d) .* sqrt(weight);                                            % FA 5/2017: added sqrt as the sigma.^2 (actually tmp=tmp.^2) in datasetstructure2data.m was removed
+if sqrflag;   resi=resi'*resi;   end                                        % FA 5/2017: identical to X2 (chi_square) in dModels) (residual vector for lsqnonlin (sqrflag-false)
+
+    % FA 5/2017: the following lines are from dmodels. resi for sqrflag equals X2: X2=(sqrt(weight)'.*(pred-d)')*((pred-d) .* sqrt(weight));
+    % r = data - model;                       % residual
+    % X2 = r'*Wd*r;                           % Chi Square - full covariance
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -114,18 +113,18 @@ if  nargout < 4;  return;  end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Calculate the regular RMS to be used in plotting program
+% Calculate the weighted RMS to be used in plotting program
 if  nargout >= 4
-    normweight=weight/sum(weight);
-    rms_weighted  = sqrt(sum((pred-d).*(pred-d)./normweight));
-             i=1; ind=[1:datind(i)];              rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); 
-    if D_2;  i=2; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); end
-    if D_3;  i=3; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); end
-    if D_4;  i=4; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); end
-    if D_5;  i=5; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); end
-    if D_6;  i=6; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); end
-    if D_7;  i=7; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); end
-    if D_8;  i=8; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt(sum((pred(ind)-d(ind)).*(pred(ind)-d(ind))./normweight(ind))); end
+    weight_norm=weight/sum(weight);
+    rms_weighted  = sqrt(sum((pred-d).*(pred-d)./weight_norm));
+             i=1; ind=[1:datind(i)];              rms(i)=sqrt( sum( (pred(ind)-d(ind)).*(pred(ind)-d(ind)).*weight(ind)/sum(weight(ind)) ) ); 
+    if D_2;  i=2; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt( sum( (pred(ind)-d(ind)).*(pred(ind)-d(ind)).*weight(ind)/sum(weight(ind)) ) ); end
+    if D_3;  i=3; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt( sum( (pred(ind)-d(ind)).*(pred(ind)-d(ind)).*weight(ind)/sum(weight(ind)) ) ); end
+    if D_4;  i=4; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt( sum( (pred(ind)-d(ind)).*(pred(ind)-d(ind)).*weight(ind)/sum(weight(ind)) ) ); end
+    if D_5;  i=5; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt( sum( (pred(ind)-d(ind)).*(pred(ind)-d(ind)).*weight(ind)/sum(weight(ind)) ) ); end
+    if D_6;  i=6; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt( sum( (pred(ind)-d(ind)).*(pred(ind)-d(ind)).*weight(ind)/sum(weight(ind)) ) ); end
+    if D_7;  i=7; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt( sum( (pred(ind)-d(ind)).*(pred(ind)-d(ind)).*weight(ind)/sum(weight(ind)) ) ); end
+    if D_8;  i=8; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt( sum( (pred(ind)-d(ind)).*(pred(ind)-d(ind)).*weight(ind)/sum(weight(ind)) ) ); end
 end
 
 % Calculate the model parameters
@@ -186,9 +185,8 @@ if  nargout >= 6
     Wper = Wper/sum(Wper)*100;
 end
 
-% Calculate the RMS 
+% Calculate the RMS for unit sigmas
 if  nargout >= 7
-    % for unit sigmas
     i=1; ind=[1:datind(1)];                       res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ;
     if D_2;  i=2; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ; end
     if D_3;  i=3; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ; end
@@ -197,10 +195,6 @@ if  nargout >= 7
     if D_6;  i=6; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ; end
     if D_7;  i=7; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ; end
     if D_8;  i=8; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ; end
-    % weighted RMS
-    i=1; ind=[1:datind(1)];                       res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ;
-    if D_2;  i=2; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ; end
-    if D_3;  i=3; ind=[datind(i-1)+1:datind(i)];  res = (pred(ind)-d(ind)) ; rms_unitsig(i)=sqrt(res'*res/length(ind)) ; end
 end
 
 % Return mlin
