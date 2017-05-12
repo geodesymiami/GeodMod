@@ -80,7 +80,7 @@ weight = 1./Sig_squared;
     % WH = SigH\eye(size(SigH));                                                  % weight for least square, 1/m^2 (equivalent to inv(SigH))
 
 mlin = [G_linearsources G_phaseramp] \ ...
-       ((d - sum(G_nonlinearsources,2)).weight);                 %FA 5/2017: keep as 'weight' instead of 'sqrt(weight)' as squaring operation  (e.resi'*resi) will not be performed
+       ((d - sum(G_nonlinearsources,2)).*weight);                 %FA 5/2017: keep as 'weight' instead of 'sqrt(weight)' as squaring operation  (e.resi'*resi) will not be performed
 % mlin = [G_linearsources G_phaseramp] \ ...
 %     ((d - sum(G_nonlinearsources,2))./sqrt(normalization));    %FA 2/2010  takes weighting into account. Important if different datasets have different weight. Not fully verified - need to check equation !
 %     mlin = [G_linearsources G_phaseramp] \ ...
@@ -115,8 +115,6 @@ if  nargout < 4;  return;  end
 
 % Calculate the weighted RMS to be used in plotting program
 if  nargout >= 4
-    weight_norm=weight/sum(weight);
-    rms_weighted  = sqrt(sum((pred-d).*(pred-d)./weight_norm));
              i=1; ind=[1:datind(i)];              rms(i)=sqrt( sum( (pred(ind)-d(ind)).*(pred(ind)-d(ind)).*weight(ind)/sum(weight(ind)) ) ); 
     if D_2;  i=2; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt( sum( (pred(ind)-d(ind)).*(pred(ind)-d(ind)).*weight(ind)/sum(weight(ind)) ) ); end
     if D_3;  i=3; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt( sum( (pred(ind)-d(ind)).*(pred(ind)-d(ind)).*weight(ind)/sum(weight(ind)) ) ); end
@@ -125,6 +123,7 @@ if  nargout >= 4
     if D_6;  i=6; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt( sum( (pred(ind)-d(ind)).*(pred(ind)-d(ind)).*weight(ind)/sum(weight(ind)) ) ); end
     if D_7;  i=7; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt( sum( (pred(ind)-d(ind)).*(pred(ind)-d(ind)).*weight(ind)/sum(weight(ind)) ) ); end
     if D_8;  i=8; ind=[datind(i-1)+1:datind(i)];  rms(i)=sqrt( sum( (pred(ind)-d(ind)).*(pred(ind)-d(ind)).*weight(ind)/sum(weight(ind)) ) ); end
+    rms(i+1)  = sqrt(sum((pred-d).*(pred-d).*weight/sum(weight)));   %weighted RMSD
 end
 
 % Calculate the model parameters

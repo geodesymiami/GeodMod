@@ -128,7 +128,7 @@ for k=1:maxk
     ypos=y0(k);
     radm=ra(k);
     radn=rb(k);
-    an=ang(k)
+    an=ang(k);
   else
     rada=ra(fix((k-1)/size(x0,1))+1);
     radb=rb(fix((k-1)/size(x0,1))+1);

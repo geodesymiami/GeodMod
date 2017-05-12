@@ -23,7 +23,7 @@ function [plotstr] = GenerateSummary(modelopt,dataset,inverseopt)
            fac = 1000;
   end
 
-  str=sprintf('WEIGHTED RMS: %5.2f %s  (',sqrt(sum(rms.*rms))*fac,Unit); 
+  str=sprintf('WEIGHTED RMS: %5.2f %s  (',rms(end)*fac,Unit); 
                                 for i=1:length(dataset) s=sprintf('%s %5.2f%s, ',dataset(i).DataSet,rms(i)*fac,Unit)         ;str =[str s ];end;str=[str ')']; 
   str1='NUMBER OF DATA POINTS ';for i=1:length(dataset) s=sprintf('%s %-10d, '  ,dataset(i).DataSet,dataset(i).Ndata)        ;str1=[str1 s];end;str=strvcat(str,str1); 
   str1='RMS FOR UNIT SIGMAS   ';for i=1:length(dataset) s=sprintf('%s %5.2f%s, ',dataset(i).DataSet,rms_unitsig(i)*1000,Unit);str1=[str1 s];end;str=strvcat(str,str1); 
