@@ -87,12 +87,16 @@ function [S]=ReadKeywordfile(fname,delimiter);
    for i=1:length(Clines)
       if length(Clines{i})                                                 % skip if empty line
          if isspace(delimiter)  
-            C = textscan(strtrim(Clines{i}),'%s%s','commentStyle','%');    % this allows for multiple whitespace delimiter (not in second case)
+            C = textscan(strtrim(Clines{i}),'%s%s%s%s%s%s%s%s%s%s%s%s%s','commentStyle','%');    % this allows for multiple whitespace delimiter (not in second case)
          else 
-            C = textscan(strtrim(Clines{i}),'%s%s','commentStyle','%','delimiter',delimiter);  
+            C = textscan(strtrim(Clines{i}),'%s%s%s%s%s%s%s%s%s%s%s%s%s','commentStyle','%','delimiter',delimiter);  
          end
          keyword = char(deblank(C{1}));
          value   = char(deblank(C{2}));
+         
+         if strfind(keyword,'sentinelStack') value=''; end   % FA 12/18: skip if contains sentinelStack
+         if strfind(keyword,'saraopt') value=''; end         % FA 12/18: skip 
+         
          if length(keyword) && length(value)                               % skip if keyword or value empty (don't do following if length(keyword)==0 || length(values)==0))
              %
              % find, evaluate and replace Unix environment variables (end of environment variable is blank or '/' (filesep), 

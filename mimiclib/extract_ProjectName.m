@@ -36,6 +36,7 @@ C = textscan(name,'%s','delimiter','/') ;         %split for '/'
     [Cf]=strfind(C{:},'Jers'); tmp=zeros(1,length(Cf)); for i=1:length(Cf) tmp(i)=~isempty(Cf{i}); end;  if find(tmp) match={C{1}{find(tmp)}};  end
     [Cf]=strfind(C{:},'Tsx') ; tmp=zeros(1,length(Cf)); for i=1:length(Cf) tmp(i)=~isempty(Cf{i}); end;  if find(tmp) match={C{1}{find(tmp)}};  end
     [Cf]=strfind(C{:},'Csk') ; tmp=zeros(1,length(Cf)); for i=1:length(Cf) tmp(i)=~isempty(Cf{i}); end;  if find(tmp) match={C{1}{find(tmp)}};  end %Anieri 5/16
+    [Cf]=strfind(C{:},'Sen') ; tmp=zeros(1,length(Cf)); for i=1:length(Cf) tmp(i)=~isempty(Cf{i}); end;  if find(tmp) match={C{1}{find(tmp)}};  end
 
 if exist('match')
    name=match{end};
@@ -52,6 +53,7 @@ C = textscan(name,'%s','delimiter','_') ;        %split for '_'
     [Cf]=strfind(C{:},'Jers'); tmp=zeros(1,length(Cf)); for i=1:length(Cf) tmp(i)=~isempty(Cf{i}); end;  if find(tmp) match={C{1}{find(tmp)}};  end
     [Cf]=strfind(C{:},'Tsx'); tmp=zeros(1,length(Cf)); for i=1:length(Cf) tmp(i)=~isempty(Cf{i}); end;  if find(tmp) match={C{1}{find(tmp)}};  end
     [Cf]=strfind(C{:},'Csk'); tmp=zeros(1,length(Cf)); for i=1:length(Cf) tmp(i)=~isempty(Cf{i}); end;  if find(tmp) match={C{1}{find(tmp)}};  end %Anieri 5/16
+    [Cf]=strfind(C{:},'Sen'); tmp=zeros(1,length(Cf)); for i=1:length(Cf) tmp(i)=~isempty(Cf{i}); end;  if find(tmp) match={C{1}{find(tmp)}};  end     
 
 
 name=match{end};
@@ -63,3 +65,4 @@ str='Alos' ; is=strfind(name,str) ;if (is) ie=is+length(str); projectname=name; 
 str='Jers' ; is=strfind(name,str) ;if (is) ie=is+length(str); projectname=name; areaname=name(1:is-1); satbeam=name(is:end); sat=str; end
 str='Tsx'  ; is=strfind(name,str) ;if (is) ie=is+length(str); projectname=name; areaname=name(1:is-1); satbeam=name(is:end); sat=str; end
 str='Csk'  ; is=strfind(name,str) ;if (is) ie=is+length(str); projectname=name; areaname=name(1:is-1); satbeam=name(is:end); sat=str; end %Anieri 5/16
+str='Sen'  ; is=strfind(name,str) ;if (is) ie=is+length(str); projectname=name; areaname=name(1:is-1); satbeam=name(is:is+3); sat=str; end

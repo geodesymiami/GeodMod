@@ -40,11 +40,17 @@ if ~isfield(InStruct,'width')
                         OutStruct.y_step=InStruct.AZIMUTH_PIXEL_SIZE;   else   OutStruct.y_step=-1; end
                     if isfield(InStruct,'X_UNIT')     OutStruct.x_unit=InStruct.X_UNIT;       else     OutStruct.x_unit='meters';               end
                     
-                    d=findstr(InStruct.DATE12,'-');date1=InStruct.DATE12(1:d-1) ;date2=InStruct.DATE12(d+1:end);sd1=num2str(date1) ;  sd2=num2str(date2);
+                    if findstr(InStruct.DATE12,'-') d=findstr(InStruct.DATE12,'-'); end
+                    if findstr(InStruct.DATE12,'_') d=findstr(InStruct.DATE12,'_'); end  %FA 12/18: adjusted for Sentinel
+                    
+                    date1=InStruct.DATE12(1:d-1) ;date2=InStruct.DATE12(d+1:end);sd1=num2str(date1) ;  sd2=num2str(date2);
+                    
                     mjd1=date2j(str2num(sd1(1:2)),str2num(sd1(3:4)),str2num(sd1(5:6)));mjd2=date2j(str2num(sd2(1:2)),str2num(sd2(3:4)),str2num(sd2(5:6)));
-                    if (strcmp(date1(1),'9')==1)   date1=strcat('19',date1) ; else date1=strcat('20',date1); end    %change Jan 2010 to make work with 2010 data
-                    if (strcmp(date2(1),'9')==1)   date2=strcat('19',date2) ; else date2=strcat('20',date2); end    %change Jan 2010 to make work with 2010 data
-
+                    
+                    if length(date1)==6   %FA 12/18   adjusted for 20180701 format (8 digits)
+                      if (strcmp(date1(1),'9')==1)   date1=strcat('19',date1) ; else date1=strcat('20',date1); end    %change Jan 2010 to make work with 2010 data
+                      if (strcmp(date2(1),'9')==1)   date2=strcat('19',date2) ; else date2=strcat('20',date2); end    %change Jan 2010 to make work with 2010 data
+                    end 
                     OutStruct.date1=date1;OutStruct.date2=date2;OutStruct.t1=mjd1;OutStruct.t2=mjd2;
 		
          	    if isfield(InStruct,'HEADING_DEG')  OutStruct.heading = InStruct.HEADING_DEG ;  end
