@@ -156,7 +156,7 @@ end
        end
    end
 
-   [igram]=remove_mean(igram);
+   %[igram]=remove_mean(igram); %FA 12/18: Commented out as it looks unnecessary
 
 %
 % add DataSet to igram structure
