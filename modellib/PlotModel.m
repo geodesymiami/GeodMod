@@ -183,8 +183,10 @@ case {'Grid'}
          % directions.  Estimate number of points in each direction as
          % either the size of the input arrays or the effective square
          % spacing if x and y are vectors. (from quiver.m)
-         hscale = 1;
-         vscale = 1;
+
+         if isfield(plotmodelopt,'hscale') hscale=plotmodelopt.hscale; else hscale=1; end    % FA 12/18: give in minfile
+         if isfield(plotmodelopt,'vscale') vscale=plotmodelopt.vscale; else vscale=1; end    % as automatic sizing did not work
+         
          if min(size(dGPS.xy(1,:)))==1, n=sqrt(numel(dGPS.xy(1,:))); m=n; else [m,n]=size(dGPS.xy(1,:)); end
          delx = diff([min(dGPS.xy(1,:)) max(dGPS.xy(1,:))])/n;
          dely = diff([min(dGPS.xy(2,:)) max(dGPS.xy(2,:))])/m;
@@ -572,6 +574,9 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if GPShorz || GPSvert
     
+    hscale=hscale*10;  %FA 12/18: unclear why needed but works
+    vscale=vscale*10;
+    
     %%% Yunjun, 2015-12-03: Fix figure size, move subplot2 a little bit up
     %%% to avoid overlap with txt
     scsz = get(0,'ScreenSize');
@@ -626,13 +631,14 @@ if GPShorz || GPSvert
         axis equal; axis tight;
         set(gca,'YDir','normal')
     end
-    if GPShorz && GPSvert;
-    xlim = [min([get(h1,'Xlim'),get(h2,'Xlim')]),max([get(h1,'Xlim'),get(h2,'Xlim')])];
-    ylim = [min([get(h1,'Ylim'),get(h2,'Ylim')]),max([get(h1,'Ylim'),get(h2,'Ylim')])];
-    xwid = xlim(2)-xlim(1);             xlim = xlim+[xwid*-0.05 xwid*0.05];
-    ywid = ylim(2)-ylim(1);             ylim = ylim+[ywid*-0.05 ywid*0.05];
-    set(h1,'Xlim',xlim,'Ylim',ylim);    set(h2,'Xlim',xlim,'Ylim',ylim)
-    end
+    % FA 12/2018: purpose of set commands unclear. commenetd out
+    %if GPShorz && GPSvert;
+    %xlim = [min([get(h1,'Xlim'),get(h2,'Xlim')]),max([get(h1,'Xlim'),get(h2,'Xlim')])];
+    %ylim = [min([get(h1,'Ylim'),get(h2,'Ylim')]),max([get(h1,'Ylim'),get(h2,'Ylim')])];
+    %xwid = xlim(2)-xlim(1);             xlim = xlim+[xwid*-0.05 xwid*0.05];
+    %ywid = ylim(2)-ylim(1);             ylim = ylim+[ywid*-0.05 ywid*0.05];
+    %set(h1,'Xlim',xlim,'Ylim',ylim);    set(h2,'Xlim',xlim,'Ylim',ylim)
+    %end
     % write model
     axes
     text(0,0.5,plotstr,'Units','normalized','FontSize',FontSize,'FontName','Courier')

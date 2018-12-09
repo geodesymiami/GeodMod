@@ -94,7 +94,7 @@ if strcmp(dataset(1).CoordSystem,'ProjectProfile') return ; end
  
  out_name2 = fullfile(dir_out,'DataModelResidual_lola'    ) ;
  out_name4 = fullfile(dir_out,'DataModelResidualRampOrigdata_lola') ;
-  
-   
+ data_name = fullfile(dir_out,'DataModelResidual_lola_files')
+ save(data_name,'data') %,'GPSdata','GPSpred')  
  logplot('PlotData_DataModelResidual',out_name2,data(1:N_SAR*3+N_GPSonly),plotdataopt,3)
  logplot('PlotData_DataModelResidual',out_name4,data,plotdataopt,5)
