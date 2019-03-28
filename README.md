@@ -1,37 +1,36 @@
-## Welcome to GitHub Pages
+## Geodetic modelling software in Matlab
 
-You can use the [editor on GitHub](https://github.com/yunjunz/GeodMod/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### 1. Installation
 
-### Markdown
+#### 1.1 Download
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```
+git clone https://github.com/falkamelung/GeodMod.git
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+#### 1.2 Setup environment path
 
-### Jekyll Themes
+Add the following to your _~/.cshrc_:
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/yunjunz/GeodMod/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+```
+setenv GEODMOD_HOME       ~/development/matlab/GeodMod
+setenv GEODMOD_TESTDATA   ~/insarlab/test/geodmod
+setenv GEODMOD_TESTBENCH  ~/insarlab/test/geodmod_testbench
+```
 
-### Support or Contact
+#### 1.3 Setup matlab path
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Add the following to your _startup.m_ file for Matlab to initiate the configuration:
+
+```matlab
+%% Setting for GeodMod
+disp('Setting paths for geodmod...')
+run( [ getenv('GEODMOD_HOME') filesep 'addpath_geodmod'] )
+```
+
+### 2. Test Run
+
+```matlab
+geodmod Darwin.min
+```
