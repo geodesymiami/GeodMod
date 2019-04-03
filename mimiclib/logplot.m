@@ -88,6 +88,6 @@ global plot_visible plot_save
       if  surface_flag                               % there is an issue with transparency rendering. It does not work out of terminal emulation mode (matlabnn)
            %print('-dpdf','-painter',nout_name)
       else  
-           print('-dpdf',nout_name);
+           print('-bestfit', '-dpdf', nout_name);
       end
   end
