@@ -14,6 +14,7 @@ git clone https://github.com/falkamelung/GeodMod.git
 Add the following to your _~/.cshrc_:
 
 ```
+alias matlab              '/Applications/MATLAB_R2017a.app/bin/matlab'  #adjust for your own version
 setenv GEODMOD_HOME       ~/development/matlab/GeodMod
 setenv GEODMOD_TESTDATA   ~/insarlab/test/geodmod
 setenv GEODMOD_TESTBENCH  ~/insarlab/test/geodmod_testbench
@@ -31,6 +32,9 @@ run( [ getenv('GEODMOD_HOME') filesep 'addpath_geodmod'] )
 
 ### 2. Test Run
 
-```matlab
-geodmod Darwin.min
+Start matlab program from terminal to initiate the environment variables defined above.
+
+```
+matlab
+>>geodmod Darwin.min
 ```
