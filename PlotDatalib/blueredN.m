@@ -1,5 +1,5 @@
  function dism=bluered
 
 
-load ([getenv('GEODMODHOME'),'/PlotDatalib/cmaps/bluered.mat'])
+load ([getenv('GEODMOD_HOME'),'/PlotDatalib/cmaps/bluered.mat'])
 dism=bluered;
