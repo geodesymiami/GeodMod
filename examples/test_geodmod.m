@@ -38,7 +38,7 @@ function []=test_geodmod(what)
 
   for i=1:length(list)
       dirname  = fullfile(getenv('GEODMOD_TESTBENCH'),list{i}) ;
-      filename = [getenv('GEODMODHOME') filesep 'distribution_testing' filesep list{i} '.min' ] ;
+      filename = [getenv('GEODMOD_HOME') filesep 'distribution_testing' filesep list{i} '.min' ] ;
       if exist(dirname,'dir')   rmdir(dirname,'s');  end
       logmessage(['Test #' num2str(i) ', running....   geodmod ' filename])
 

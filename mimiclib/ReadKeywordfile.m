@@ -11,7 +11,7 @@ function [S]=ReadKeywordfile(fname,delimiter);
 %    Read Keywords from an ascii file and puts contents into structure S. Reads *template and *min files (delimiter '=')
 %    and *rsc files (delimiter ' '). Use the matlab isalpha function to determin wehter the value is a string or number. Exceptions 
 %    are hardwired in the code (e.g. DATE12 and HEIGHT [23232-30000 is otherwise evaluated numerically). All strings containing '
-%    are considered numbers so that they are evaluted as a proper matlab command (e.g.: strcat(getenv('GEODMODHOME'),'/DATADIR'))
+%    are considered numbers so that they are evaluted as a proper matlab command (e.g.: strcat(getenv('GEODMOD_HOME'),'/DATADIR'))
 %    Examples:
 %
 %   S=ReadKeywordfile('123.unw.rsc',' '):
@@ -24,7 +24,7 @@ function [S]=ReadKeywordfile(fname,delimiter);
 %   S=ReadKeywordfile('HawaiiRsatD1.template','='):
 %
 %         SLCdir                  = /RAID6/sbaker/SLCs/HawaiiRsatD6/
-%         selectpairsopt.dir      = strcat(getenv('GEODMODHOME'),'/DATADIR')     
+%         selectpairsopt.dir      = strcat(getenv('GEODMOD_HOME'),'/DATADIR')     
 %         selectpairsopt.maxPbase = 600                    # some comment
 %         selectpairsopt.minTbase = 1.0                             
 %         electpairsopt.maxTbase  = 10    
@@ -123,7 +123,7 @@ function [S]=ReadKeywordfile(fname,delimiter);
              elseif any(strcmp(value,value_force_number))  
                         value_mod = value;                                 % force to number: do not put into ' ', even if letter  (e.g. FollowGradient = true)
              elseif any(isalpha(value)) &&  ~any(strfind(value,'''')) 
-                        value_mod = sprintf('''%s''',value) ;              % force all fields with letters to strings ' ', except if string contains ' (e.g. strcat(getenv('GEODMODHOME'),'/DIR')
+                        value_mod = sprintf('''%s''',value) ;              % force all fields with letters to strings ' ', except if string contains ' (e.g. strcat(getenv('GEODMOD_HOME'),'/DIR')
              else
                          value_mod=value;
              end
