@@ -6,7 +6,7 @@
 #### 1.1 Download
 
 ```
-git clone https://github.com/falkamelung/GeodMod.git
+git clone https://github.com/geodesymiami/GeodMod.git
 ```
 
 #### 1.2 Setup environment path
