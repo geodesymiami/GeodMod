@@ -85,7 +85,7 @@ function [S]=ReadKeywordfile(fname,delimiter);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
    for i=1:length(Clines)
-      if length(Clines{i})                                                 % skip if empty line
+      if ~isempty(Clines{i})                                                 % skip if empty line
          if isspace(delimiter)  
             C = textscan(strtrim(Clines{i}),'%s%s%s%s%s%s%s%s%s%s%s%s%s','commentStyle','%');    % this allows for multiple whitespace delimiter (not in second case)
          else 
@@ -94,10 +94,10 @@ function [S]=ReadKeywordfile(fname,delimiter);
          keyword = char(deblank(C{1}));
          value   = char(deblank(C{2}));
          
-         if strfind(keyword,'sentinelStack') value=''; end   % FA 12/18: skip if contains sentinelStack
-         if strfind(keyword,'saraopt') value=''; end         % FA 12/18: skip 
+         if contains(keyword,'sentinelStack'); value=''; end   % FA 12/18: skip if contains sentinelStack
+         if contains(keyword,'saraopt'); value=''; end         % FA 12/18: skip 
          
-         if length(keyword) && length(value)                               % skip if keyword or value empty (don't do following if length(keyword)==0 || length(values)==0))
+         if ~isempty(keyword) && ~isempty(value)                               % skip if keyword or value empty (don't do following if length(keyword)==0 || length(values)==0))
              %
              % find, evaluate and replace Unix environment variables (end of environment variable is blank or '/' (filesep), 
              % tested for value='$SLCDIR /RAID3/famelung', value='--geo --kmz --to $USER', value='$SLCDIR/Wellsquake'
@@ -125,10 +125,11 @@ function [S]=ReadKeywordfile(fname,delimiter);
              elseif any(isalpha(value)) &&  ~any(strfind(value,'''')) 
                         value_mod = sprintf('''%s''',value) ;              % force all fields with letters to strings ' ', except if string contains ' (e.g. strcat(getenv('GEODMOD_HOME'),'/DIR')
              else
-                         value_mod=value;
+                        value_mod=value;
              end
              %disp(sprintf('S.%s=%s;',keyword,value_mod))  
              eval(sprintf('S.%s=%s;',keyword,value_mod));
+             %fprintf('S.%s=%s;',keyword,value_mod);
          end
       end
    end

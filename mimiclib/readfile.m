@@ -1,4 +1,4 @@
-function [amp,phase,RscVar] = readfile(infile,opt);
+function [amp,phase,RscVar] = readfile(infile,opt)
 
 %
 %   readfile        - reads roi_pac, doris, gamma, IREA, ... file types
@@ -72,10 +72,9 @@ switch lower(origin)
     case{'roi_pac'}
 
         infile=deblank(infile);extens=infile(size(infile,2)-2:size(infile,2));
-        Rscfile=[infile,'.rsc'];
         RscVar=ReadKeywordfile([infile,'.rsc']);
 
-        if (strcmp(extens,'cor') | strcmp(extens,'unw') | strcmp(extens,'hgt'))
+        if (strcmp(extens,'cor') || strcmp(extens,'unw') || strcmp(extens,'hgt'))
 
             switch(precision)
                 case('double')
@@ -89,7 +88,7 @@ switch lower(origin)
                     phase = zeros(nlines,RscVar.WIDTH);
                     amp = zeros(nlines,RscVar.WIDTH);
                     
-                    for line = 1:nlines,
+                    for line = 1:nlines
                         amp(line,:)  = F((line-1)*(2*RscVar.WIDTH)+1:(line-1)*(2*RscVar.WIDTH)+RscVar.WIDTH)';
                         phase(line,:)= F((line-1)*(2*RscVar.WIDTH)+RscVar.WIDTH+1 : line*(RscVar.WIDTH*2))';
                     end
@@ -104,14 +103,14 @@ switch lower(origin)
                     phase = single(zeros(nlines,RscVar.WIDTH));
                     amp = single(zeros(nlines,RscVar.WIDTH));
                     
-                    for line = 1:nlines,
+                    for line = 1:nlines
                         amp(line,:)  = F((line-1)*(2*RscVar.WIDTH)+1:(line-1)*(2*RscVar.WIDTH)+RscVar.WIDTH)';
                         phase(line,:)= F((line-1)*(2*RscVar.WIDTH)+RscVar.WIDTH+1 : line*(RscVar.WIDTH*2))';
                     end
             end
             
 
-        elseif (strcmp(extens,'int') | strcmp(extens,'slc'))
+        elseif (strcmp(extens,'int') || strcmp(extens,'slc'))
 
             fid=fopen(infile,'r');
             [F,count]=fread(fid,'float');

@@ -18,9 +18,9 @@ function [satparameter]=extract_hardwired_satparameters(in_name, parameter)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-if isstruct(in_name)  if isfield(in_name,'heading') azimuth = in_name(1).heading/180*pi ;  end ;  in_name = in_name(1).sat ;  end
+if isstruct(in_name);  if isfield(in_name,'heading'); azimuth = in_name(1).heading/180*pi ;  end ;  in_name = in_name(1).sat ;  end
 
-[junk,junk,satbeam,sat]= extract_ProjectName(in_name);
+[~,~,satbeam,sat]= extract_ProjectName(in_name);
 
 switch parameter
     case {'wavelength'}
@@ -72,7 +72,7 @@ switch parameter
     
             case{'JersD'};              offnadir = 35.0/180*pi ; if ~exist ('azimuth','var') azimuth =  -169/180*pi ;  end
             case{'AlosD'};              offnadir = 34.3/180*pi ; if ~exist ('azimuth','var') azimuth =-167.8/180*pi ;  end
-            case{'AlosD04'};            offnadir = 25.8/180*pi ; if ~exist ('azimuth','var') azimuth =-167.8/180*pi ;  end
+            %case{'AlosD04'};            offnadir = 25.8/180*pi ; if ~exist ('azimuth','var') azimuth =-167.8/180*pi ;  end
             case{'AlosA'};              offnadir = 34.3/180*pi ; if ~exist ('azimuth','var') azimuth = -12.2/180*pi ;  end
             otherwise
                 errordlg(sprintf('satbeam not recognized %s',satbeam)) ;
