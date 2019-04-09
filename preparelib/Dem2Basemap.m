@@ -24,9 +24,9 @@ defaultopt=struct(                                                        ...
                  )          ;
 
 
-if ~exist('opt','var')  [opt]=read_options_fromfile([mfilename '.min'],defaultopt); end ;
+if ~exist('opt','var');  [opt]=read_options_fromfile([mfilename '.min'],defaultopt); end 
 [opt]=process_defaultoptions(opt,defaultopt);  %display(opt)
-f=fieldnames(opt) ; for i=1:length(f) eval([char(f{i}) '= opt.(f{i}) ;' ]) ; end
+f=fieldnames(opt) ; for i=1:length(f); eval([char(f{i}) '= opt.(f{i}) ;' ]) ; end
 
 [pathstr, name, ext] = fileparts(ShadedRelieffile); 
 
@@ -34,7 +34,7 @@ inlist  = {demfile [demfile '.rsc'] ShadedRelieffile [ShadedRelieffile '.rsc'] }
 outfile = fullfile(dir_out,'basemap.mat');
 
 new_flag=true;
-if  CheckInOut(inlist,outfile) new_flag=false;  return; end
+if  CheckInOut(inlist,outfile); new_flag=false;  return; end
 
 %
 % load DEM
@@ -42,7 +42,7 @@ if  CheckInOut(inlist,outfile) new_flag=false;  return; end
    lopt.Unit = 'm';               % no sign changes
    lopt.DataType='Dem';
    lopt.origin='dem';
-   if isstruct(subset) lopt.subset=subset ; elseif subset  lopt.subset=subset;  end
+   if isstruct(subset); lopt.subset=subset ; elseif subset;  lopt.subset=subset;  end
    if DemAreaEqualsSubset 
       lopt=rmfield(lopt,'subset');
    end
@@ -69,7 +69,7 @@ if  CheckInOut(inlist,outfile) new_flag=false;  return; end
 %  For UTM coordinates x_posting,y_posting follows directly from x_step,y_step (by dvision by 1000). For Geographic coordinates we calculate
 %  FA Oct 2006 
 %
-if strcmp(basemap.x_unit,'degres') | strcmp(basemap.x_unit,'degrees')
+if strcmp(basemap.x_unit,'degres') || strcmp(basemap.x_unit,'degrees')
     x_last    = basemap.x_first + basemap.x_step*size(basemap.data,2);
     y_last    = basemap.y_first + basemap.y_step*size(basemap.data,1);
 

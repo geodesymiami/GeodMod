@@ -1,4 +1,4 @@
-function []=gclean(what, arg2);
+function []=gclean(what, arg2)
 %gclean     -  removes files from last geodmod run
 %
 %usage:  gclean igram
@@ -30,15 +30,15 @@ function []=gclean(what, arg2);
 % check remove string
 %
 
-if ~exist('.last_dir_out','file') error('.last_dir_out not found -- user error -- exiting'); end
+if ~exist('.last_dir_out','file'); error('.last_dir_out not found -- user error -- exiting'); end
 f1=fopen('.last_dir_out','r'); last_dir_out=fscanf(f1,'%s'); fclose(f1);
-[pathstr,fname,ext]  = fileparts(last_dir_out) ;   
-if isempty(fname)      error('no name found -- exiting');  end
+[pathstr,fname,~]  = fileparts(last_dir_out) ;   
+if isempty(fname);      error('no name found -- exiting');  end
 
  
 keepfiles = {'model_gibbs.mat'};  %need special treatment because the filematch for 'model*.mat' will otherwise remove it
 
-if strcmp(what,'all') what = 'basemap'; keepfiles={}; end
+if strcmp(what,'all'); what = 'basemap'; keepfiles={}; end
 
 % First string is the identifier (on command line),  second is filematch
 list      = cell(2,12);                              i=1;
@@ -50,7 +50,7 @@ list(:,i) = {'Qt'            'motion*Qt'};           i=i+1;
 list(:,i) = {'Grid'          'motion*Grid'};         i=i+1;
 list(:,i) = {'Profile'       'motion_*_Profile'};    i=i+1;
 list(:,i) = {'threed'        'motion_threedfield'};  i=i+1;
-list(:,i) = {'GPS'           '*GPS*'};               i=i+1;
+list(:,i) = {'GPS'           '*GPS'};               i=i+1;
 list(:,i) = {'model'};                               i=i+1;
 list(:,i) = {'distribmodel'};                        i=i+1;
 list(:,i) = {'enu'};                                 i=i+1;
@@ -60,15 +60,16 @@ i_start   = strmatch(what,list(1,:),'exact');
 if isempty(i_start) && isempty(strmatch(what,{'plot' 'model_gibbs' 'gibbs'})) errordlg(sprintf('string %s is not supported',what));error('-exiting'); end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % find matching files and remove them
-if exist('arg2') && strcmp('only',arg2)
+if exist('arg2', 'var') && strcmp('only',arg2)
     list(:,i_start+1:end)=[];
 end
 
 
  for i=i_start:length(list)
      filematch = fullfile(pathstr,fname,[list{2,i} '*.mat']);
-     s         = dir(filematch);
-     i         = strmatch(keepfiles,{s.name}); s(i)=[];
+     s = dir(filematch);
+     i = strmatch(keepfiles,{s.name});
+     s(i) = [];
      for j=1:length(s)
          file  = fullfile(pathstr,fname,s(j).name);
          delete(file);
