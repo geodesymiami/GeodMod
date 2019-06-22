@@ -21,6 +21,7 @@ function [u_radarlook,u,u_sum] = ForwardModel(par,coord,radarlook,modelopt,hgt)
 %       mogi       [ xE    xN    Dep   Stren                                          ]
 %       penny      [ xE    xN    Dep   Rad    Stren                                   ]
 %       mctigue    [ xE    xN    Dep   Rad    Press                                   ]
+%       pCDM       [ xE    xN    Dep   omX omY omZ dvX dvY dvZ                        ]
 %       yang       [ xE    xN    Dep   Press  majAx   AxRatio Strike  Plunge          ]
 %       visco1d    [ Len   Wid   Dep   Dip    Strike  xE      xN      ss      ds   op ]
 %       lockedandcreep
@@ -39,6 +40,7 @@ function [u_radarlook,u,u_sum] = ForwardModel(par,coord,radarlook,modelopt,hgt)
     N_mogi           = modelopt.N_mogi;
     N_penny          = modelopt.N_penny;
     N_mctigue        = modelopt.N_mctigue;
+    N_pCDM           = modelopt.N_pCDM;
     N_yang           = modelopt.N_yang;
     N_squaredisloc   = modelopt.N_squaredisloc;
     N_multidisloc    = modelopt.N_multidisloc;
@@ -79,7 +81,15 @@ function [u_radarlook,u,u_sum] = ForwardModel(par,coord,radarlook,modelopt,hgt)
 
     if N_penny  >= 1   if ~Topo ut=penny_source(par(1:5),coord);  else ut=penny_sourcetopo(par(1:5),coord,hgt,Topo);  end; u=[u ut(:)]; par(1:5) =[]; end
     if N_mctigue>= 1   if ~Topo ut=mctigue(par(1:5),coord,1,nu);  else ut=mctiguetopo(par(1:5),coord,1,nu,hgt,Topo);  end; u=[u ut(:)]; par(1:5) =[]; end
-    if N_yang   >= 1   if ~Topo ut=yang_source(par(1:8),coord,nu);else ut=yang_sourcetopo(par(1:8),coord,nu,hgt,Topo);end; u=[u ut(:)]; par(1:5) =[]; end
+
+    if N_pCDM>= 1   
+      X=coord(1,:);
+      Y=coord(2,:);
+      [ue,un,uv]=pCDM(X,Y,par(1),par(2),par(3),par(4),par(5),par(6),par(7),par(8),par(9),0.25);
+      u=[u ut(:)]; par(1:5) =[]; 
+    end
+    
+if N_yang   >= 1   if ~Topo ut=yang_source(par(1:8),coord,nu);else ut=yang_sourcetopo(par(1:8),coord,nu,hgt,Topo);end; u=[u ut(:)]; par(1:5) =[]; end
 
     if N_squaredisloc   >= 1  
         ut=squaredisloc(par(1:9,:),coord,nu);  u=[u ut(:)]; par(1:9,:)=[]; 

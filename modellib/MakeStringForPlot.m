@@ -26,6 +26,7 @@ if objfuncopt.modelopt.N_squaredisloc   s=[s ', squaredisloc:'    num2str(objfun
 if objfuncopt.modelopt.N_multidisloc    s=[s ', multidisloc:'     num2str(objfuncopt.modelopt.N_multidisloc)   ]; end
 if objfuncopt.modelopt.N_mogi           s=[s ', mogi: '           num2str(objfuncopt.modelopt.N_mogi)          ]; end
 if objfuncopt.modelopt.N_mctigue        s=[s ', mcTigue: '        num2str(objfuncopt.modelopt.N_mctigue)       ]; end
+if objfuncopt.modelopt.N_pCDM           s=[s ', pCDM: '           num2str(objfuncopt.modelopt.N_pCDM)          ]; end
 if objfuncopt.modelopt.N_penny          s=[s ', penny: '          num2str(objfuncopt.modelopt.N_penny)         ]; end
 if objfuncopt.modelopt.N_yang           s=[s ', yang: '           num2str(objfuncopt.modelopt.N_yang)          ]; end
 if objfuncopt.modelopt.N_lockedandcreep s=[s ', lockedandcreep: ' num2str(objfuncopt.modelopt.N_lockedandcreep)]; end

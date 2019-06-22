@@ -22,6 +22,7 @@ function [s] = plot_model_parameters(modelopt,x_unit,varargin);
      N_mogi           = modelopt.N_mogi;
      N_penny          = modelopt.N_penny;
      N_mctigue        = modelopt.N_mctigue;
+     N_pCDM           = modelopt.N_pCDM;
      N_yang           = modelopt.N_yang;
      N_multidisloc    = modelopt.N_multidisloc;
      N_visco1d        = modelopt.N_visco1d;
@@ -115,6 +116,23 @@ function [s] = plot_model_parameters(modelopt,x_unit,varargin);
           end
      end
 
+     % copied from Mogi
+     if N_pCDM>=1
+          switch PlotType
+          case {'2D' 'Map'}
+               if N_mogi       >= 1  plot(par(1),par(2),'k+');  par(1:4) =[]; end
+               if N_mogi       >= 2  plot(par(1),par(2),'k+');  par(1:4) =[]; end
+               if N_mogi       >= 3  plot(par(1),par(2),'k+');  par(1:4) =[]; end
+          case {'3D'}
+               par_mogi        = par(1:N_mogi*4);
+               [s]             = plot_mogi3d(par_mogi);
+               s               = [0 abs(s)];
+               par(1:N_mogi*4) = [] ;
+          case {'1D' 'CrossSection'}  
+               logmessage('--> Need to write CrossSection plot code for this source')
+          end
+     end
+     
      if N_yang>=1
           switch PlotType
           case {'2D' 'Map'}

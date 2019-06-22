@@ -133,6 +133,7 @@ if  nargout >= 5
     N_mogi             = objfuncopt.modelopt.N_mogi           ;
     N_penny            = objfuncopt.modelopt.N_penny          ;
     N_mctigue          = objfuncopt.modelopt.N_mctigue        ;
+    N_pCDM             = objfuncopt.modelopt.N_pCDM           ;
     N_yang             = objfuncopt.modelopt.N_yang           ;
     N_multidisloc      = objfuncopt.modelopt.N_multidisloc    ;
     N_visco1d          = objfuncopt.modelopt.N_visco1d        ;
@@ -160,6 +161,7 @@ if  nargout >= 5
     if N_mogi          >=3;   tpar(4)    = tpar(4)   *tmlin(1); npar = [npar; tpar(1:4) ]; tpar(1:4) =[]; tmlin(1)=[]; end
     if N_penny         >=1;   tpar(5)    = tpar(5)   *tmlin(1); npar = [npar; tpar(1:5) ]; tpar(1:5) =[]; tmlin(1)=[]; end
     if N_mctigue       >=1;   tpar(5)    = tpar(5)   *tmlin(1); npar = [npar; tpar(1:5) ]; tpar(1:5) =[]; tmlin(1)=[]; end
+    if N_pCDM          >=1;   tpar(5)    = tpar(5)   *tmlin(1); npar = [npar; tpar(1:5) ]; tpar(1:5) =[]; tmlin(1)=[]; end %FA 6/19: to be done
     if N_yang          >=1;   tpar(4)    = tpar(4)   *tmlin(1); npar = [npar; tpar(1:8) ]; tpar(1:8) =[]; tmlin(1)=[]; end
     if N_multidisloc   >=1;   tpar(8:10) = tpar(8:10)*tmlin(1); npar = [npar; tpar(1:ml)]; tpar(1:ml)=[]; tmlin(1)=[]; end
     if N_squaredisloc  >=1;   tpar(7:9)  = tpar(7:9) *tmlin(1); npar = [npar; tpar(1:9)];  tpar(1:9) =[]; tmlin(1)=[]; end

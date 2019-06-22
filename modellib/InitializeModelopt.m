@@ -15,10 +15,11 @@ function [modelopt,default_bounds]=InitializeModelopt(modelopt,basemap)
 %      2. mogi
 %      3. penny
 %      4. mctigue
-%      5. yang
-%      6. multidisloc
-%      7. visco1d
-%      8. lockedandcreep
+%      5. pCDM
+%      6. yang
+%      7. multidisloc
+%      8. visco1d
+%      9. lockedandcreep
 %
 % TODO: At the end of the function need to clean out (rmfield) visco1dopt, etc 
 % V1.0  Falk Amelung, June 2007, modified from MakeParnames.m
@@ -32,6 +33,7 @@ defaultopt=struct(                                                         ...
         'N_mogi'             ,        'off'                   ,            ...
         'N_penny'            ,        'off'                   ,            ...
         'N_mctigue'          ,        'off'                   ,            ...
+        'N_pCDM'             ,        'off'                   ,            ...
         'N_yang'             ,        'off'                   ,            ...
         'N_squaredisloc'     ,        'off'                   ,            ...
         'N_multidisloc'      ,        'off'                   ,            ...
@@ -57,7 +59,7 @@ defaultopt.visco1dopt=struct(                        ...
 f=fieldnames(modelopt) ; for i=1:length(f) eval([char(f{i}) '= modelopt.(f{i}) ;' ]) ; end
 logmessage(mfilename);
 
-N_sources = N_disloc+N_fault+N_mogi+N_penny+N_mctigue+N_yang+N_multidisloc+N_visco1d+N_lockedandcreep+N_peas+N_squaredisloc;
+N_sources = N_disloc+N_fault+N_mogi+N_penny+N_mctigue+N_pCDM+N_yang+N_multidisloc+N_visco1d+N_lockedandcreep+N_peas+N_squaredisloc;
 
 if N_sources==0  N_disloc=1 ; end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -108,6 +110,12 @@ mctigue_namform       = {'%5s'   '%5s'   '%5s'   '%5s'   '%5s'  }  ;
 mctigue_varform       = {'%5.2f' '%5.2f' '%5.2f' '%5.3f' '%5.2f'};
 mctigue_bounds.xy(:,1)= [x_start y_start  2        1       999  ];
 mctigue_bounds.xy(:,2)= [x_end   y_end    10       2       999  ];
+
+pCDM_names         = {'xE'    'xN'    'Dep'   'omX'   'omY'   'omZ'   'DVx'   'DVy'   'DVz'};                                        
+pCDM_namform       = {'%5s'   '%5s'   '%5s'   '%5s'   '%5s'   '%5s'   '%5s'   '%5s'   '%5s'};                                        
+pCDM_varform       = {'%5.2f' '%5.2f' '%5.2f' '%5.3f' '%5.2f' '%5.2f' '%5.2f' '%5.2f' '%5.2f'};
+pCDM_bounds.xy(:,1)= [x_start y_start  2        1      1       1       999     999     999  ];
+pCDM_bounds.xy(:,2)= [x_end   y_end    10       89     89      89      999     999     999  ];
 
 yang_names          = {'xE'    'xN'    'Dep'   'Press' 'majAx' 'AxRatio' 'Strike' 'Plunge' };                                        
 yang_namform        = {'%5s'   '%5s'   '%5s'   '%5s'   '%5s'   '%7s'     '%7s'    '%7s'    };                                        
@@ -192,6 +200,12 @@ if N_mctigue >=1
    names  =[names   mctigue_names  ];
 end
 
+if N_pCDM >=1
+   namform=[namform pCDM_namform]; 
+   varform=[varform pCDM_varform]; 
+   names  =[names   pCDM_names  ];
+end
+
 if N_yang >= 1
    namform=[namform yang_namform]; 
    varform=[varform yang_varform]; 
@@ -239,6 +253,7 @@ if N_fault           default_bounds.fault           = fault_bounds;          end
 if N_mogi            default_bounds.mogi            = mogi_bounds;           end
 if N_penny           default_bounds.penny           = penny_bounds;          end
 if N_mctigue         default_bounds.mctigue         = mctigue_bounds;        end
+if N_pCDM            default_bounds.pCDM            = pCDM_bounds;           end
 if N_yang            default_bounds.yang            = yang_bounds;           end
 if N_multidisloc     default_bounds.multidisloc     = multidisloc_bounds;    end
 if N_visco1d         default_bounds.visco1d         = visco1d_bounds;        end

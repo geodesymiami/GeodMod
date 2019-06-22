@@ -23,6 +23,8 @@ libdir = [ getenv('GEODMOD_HOME') filesep 'mex'                 ];  addpath(genp
 libdir = [ getenv('GEODMOD_HOME') filesep 'inver'               ];  addpath(genpath(libdir),'-end'); logmessage(libdir)
 libdir = [ getenv('GEODMOD_HOME') filesep 'examples'            ];  addpath(genpath(libdir),'-end'); logmessage(libdir)
 
+libdir = [ getenv('GEODMOD_HOME') filesep 'compound_dislocations']; addpath(genpath(libdir),'-end'); logmessage(libdir)
+
 %opengl software; logmessage('opengl set to software (at RSMAS)');
 CheckToolboxes();
 

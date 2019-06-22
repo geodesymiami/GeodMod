@@ -65,6 +65,13 @@ f=fieldnames(modelopt);   for i=1:length(f) eval([char(f{i}) '= modelopt.(f{i}) 
         mctigue_bounds.xy(:,2)=modelpar_lola2xy(mctigue_bounds.lola(:,2),plotdataopt.basemap,tmpmodelopt,1); 
      end
   end
+  if exist('pCDM_bounds','var')
+     if ~isfield(pCDM_bounds,'xy') && isfield(pCDM_bounds,'lola')       
+        tmpmodelopt=InitializeModelopt(struct('N_pCDM',N_pCDM),plotdataopt.basemap);
+        pCDM_bounds.xy(:,1)=modelpar_lola2xy(pCDM_bounds.lola(:,1),plotdataopt.basemap,tmpmodelopt,1); 
+        pCDM_bounds.xy(:,2)=modelpar_lola2xy(pCDM_bounds.lola(:,2),plotdataopt.basemap,tmpmodelopt,1); 
+     end
+  end
   if exist('yang_bounds','var') 
      if ~isfield(yang_bounds,'xy') && isfield(yang_bounds,'lola')       
         tmpmodelopt=InitializeModelopt(struct('N_yang',N_yang),plotdataopt.basemap);
@@ -122,9 +129,19 @@ for i=1:double(N_mctigue)
        else                                                            bounds = [bounds; default_bounds.mctigue.xy];
    end
 end
+for i=1:double(N_pCDM)
+    if exist('pCDM_bounds','var') && length(N_pCDM_bounds.xy)>=5   bounds = [bounds; pCDM_bounds.xy(1:5,:)]; pCDM_bounds.xy(1:5,:)=[];  
+       else                                                            bounds = [bounds; default_bounds.pCDM.xy];
+   end
+end
 for i=1:double(N_yang)
     if exist('yang_bounds','var') && length(yang_bounds.xy) >= 8       bounds = [bounds; yang_bounds.xy(1:8,:)]; yang_bounds.xy(1:8,:)=[];     % FA 11/15  it was yang_bounds.xy>=5 which looks like a bug
        else                                                            bounds = [bounds; default_bounds.yang.xy];
+   end
+end
+for i=1:double(N_pCDM)
+    if exist('pCDM_bounds','var') && length(pCDM_bounds.xy)>=5   bounds = [bounds; pCDM_bounds.xy(1:5,:)]; pCDM_bounds.xy(1:5,:)=[];  
+       else                                                            bounds = [bounds; default_bounds.pCDM.xy];
    end
 end
 for i=1:double(N_squaredisloc)
@@ -193,6 +210,10 @@ for i=1:double(N_penny)
 end
 
 for i=1:double(N_mctigue) 
+    ind=1:5;  linearsourceind(i_source) = sum(tmplinearind(ind)); tmplinearind(ind)=[]; i_source=i_source+1;
+end
+
+for i=1:double(N_pCDM) 
     ind=1:5;  linearsourceind(i_source) = sum(tmplinearind(ind)); tmplinearind(ind)=[]; i_source=i_source+1;
 end
 

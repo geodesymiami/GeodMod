@@ -15,6 +15,7 @@ case {'GenericObjectiveFunction','ManyDislocOneInflation'}
      N_mogi         = modelopt.N_mogi;
      N_penny        = modelopt.N_penny;
      N_mctigue      = modelopt.N_mctigue;
+     N_pCDM         = modelopt.N_pCDM;
      N_yang         = modelopt.N_yang;
      N_multidisloc  = modelopt.N_multidisloc;
      N_visco1d      = modelopt.N_visco1d;
@@ -52,6 +53,7 @@ case {'GenericObjectiveFunction','ManyDislocOneInflation'}
      if N_penny  == 1;
                             if param(4)>3;  plot(param(1),param(2),'k+','MarkerSize',9,'LineWidth',3);  end
                             circle(param(1),param(2),param(4));                              param(1:5) =[];
+     if N_pCDM   >= 1;      plot(param(1),param(2),'k+','MarkerSize',9,'LineWidth',3);       param(1:4) =[]; end
      end
      if N_mctigue== 1;      
                             if param(3)>3;  plot(param(1),param(2),'k+','MarkerSize',9,'LineWidth',3);  end

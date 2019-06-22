@@ -94,7 +94,10 @@ f=fieldnames(inverseopt) ; for i=1:length(f) eval([char(f{i}) '= inverseopt.(f{i
 
 out_name=fullfile(dir_out,fname); 
 if  ~DoIt                                    return; end
-if  CheckInOut('',out_name)  load(out_name); return; end     % return if model.mat exist
+if  CheckInOut('',out_name)  
+    load(out_name); 
+    return; 
+end     % return if model.mat exist
 if  exist('modelopt.par','var')              return; end     % return if model parameters given
 %if  modelopt.par_xy(1) || modelopt.par_lola(1) return; end     % return if model parameters given
 
