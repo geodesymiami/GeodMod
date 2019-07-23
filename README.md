@@ -15,14 +15,14 @@ Add the following to your _~/.cshrc_:
 
 ```
 alias matlab              '/Applications/MATLAB_R2017a.app/bin/matlab'  #adjust for your own version
-setenv GEODMOD_HOME       ~/development/matlab/GeodMod
+setenv GEODMOD_HOME       ~/development/GeodMod
 setenv GEODMOD_TESTDATA   ~/insarlab/test/geodmod
 setenv GEODMOD_TESTBENCH  ~/insarlab/test/geodmod_testbench
 ```
 
 #### 1.3 Setup matlab path
 
-Add the following to your _startup.m_ file for Matlab to initiate the configuration:
+Add the following to your _startup.m_ file in _USER/matlab_ for Matlab to initiate the configuration:
 
 ```matlab
 %% Setting for GeodMod
