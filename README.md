@@ -20,7 +20,7 @@ export GEODMOD_TESTBENCH=~/Downloads/TESTBENCH
 #### 1.2 Download
 
 ```
-git clone https://github.com/geodesymiami/GeodMod.git $GEODMOD_HOME/geodmod
+git clone https://github.com/geodesymiami/GeodMod.git $GEODMOD_HOME
 ```
 
 #### 1.3 Setup matlab path
