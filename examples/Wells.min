@@ -54,6 +54,7 @@ makedatasetopt.sigphi.SAR{2}                  =  1.00
 modelopt.N_disloc                            =  1
 modelopt.N_multidisloc                       =  0
 
+###############################################    Len  Wid  Dep  Dip Strike     xE     xN   ss   ds  op
 inverseopt.disloc_bounds.xy (1:10,1)         =  [  9.0 3.00  6.5 -64.1 205.0   14.0   25.0  0.0  999 0.0 ]                 % constrained dip
 inverseopt.disloc_bounds.xy (1:10,2)         =  [ 15.0  7.0  9.5 -64.1 220.0   19.0   29.0  0.0  999 0.0 ]
 
