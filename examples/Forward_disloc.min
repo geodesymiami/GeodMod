@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 dir_out_parent                =  strcat(getenv('GEODMOD_TESTBENCH'))
-prepareopt.demfile            =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Dem/hawaii_filled_0.00056.dem.asc.hgt')
-prepareopt.ShadedRelieffile   =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005/Dem/hawaii_filled_0.00056.dem.jpeg')
+prepareopt.demfile            =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005_oneifgram/Dem/hawaii_filled_0.00056.dem.asc.hgt')
+prepareopt.ShadedRelieffile   =  strcat(getenv('GEODMOD_TESTDATA'),filesep, 'ML2002-2005_oneifgram/Dem/hawaii_filled_0.00056.dem.jpeg')
 prepareopt.CLim               =  [-0.05 0.05]
 prepareopt.subset.ji          =  [ 1250 650 400 600]          ;% LL
 %modelopt.N_mogi             =   1

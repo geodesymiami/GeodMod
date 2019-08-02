@@ -30,7 +30,8 @@ function [enu,coord,u]=ForwardModel_forBasemap(dataset,modelopt,basemap,GridRows
   [xxi,yyi]= meshgrid(xi,yi);
   coord    = [xx(:) yy(:)]';
 
-  hgt = dataset.hgt; %%%Anieri 4/27/15
+  %hgt = dataset.hgt; %%%Anieri 4/27/15
+  hgt = basemap.data; %%% FA 7/2019
   %%%
   %[~,~,u] = ForwardModel(modelopt.par.xy,coord,ones(3,length(coord)),modelopt);
   [~,~,u] = ForwardModel(modelopt.par.xy,coord,ones(3,length(coord)),modelopt,hgt); %%%Added hgt %Anieri 4/27/15
