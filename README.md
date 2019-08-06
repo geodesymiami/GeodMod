@@ -58,3 +58,13 @@ plotthemodelopt.DoIt                 = off
 plotsurface3dopt.DoIt                = off
 inverseopt.distribopt.DoIt           = off
 ```
+### 4. Dislocation  concention
+Geodmod uses the same dislocation code as GBIS. See the GBIS manual for their definitions. The dip is measured from the horizontal positive upwards. Negative dip for downward dip. 
+
+In contrast to GBIS geodmod always requires the strike-slip, downdip and opening component. GBIS requires for a fault onlt the first two and for a dike the last (the unused components are set to zero internally).
+
+```
+inverseopt.QuickStop                 = true
+plotthemodelopt.DoIt                 = off
+plotsurface3dopt.DoIt                = off
+inverseopt.distribopt.DoIt           = off
