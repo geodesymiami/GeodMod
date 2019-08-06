@@ -41,10 +41,20 @@ mkdir -p $GEODMOD_TESTDATA
 cd $GEODMOD_TESTDATA
 wget https://zenodo.org/record/3348961/files/geodmod_testdata.xz
 tar -xvJf  geodmod_testdata.xz
-
+```
 Start matlab program from terminal to initiate the environment variables defined above.
 
 ```
 matlab
 >>geodmod Darwin.min
+>>geodmod Wells.min
+```
+
+### 3. Tips
+You can disable most of the plotting (quick runs) using:
+```
+inverseopt.QuickStop                 = true
+plotthemodelopt.DoIt                 = off
+plotsurface3dopt.DoIt                = off
+inverseopt.distribopt.DoIt           = off
 ```
