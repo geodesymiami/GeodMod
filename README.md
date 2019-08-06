@@ -68,3 +68,9 @@ inverseopt.QuickStop                 = true
 plotthemodelopt.DoIt                 = off
 plotsurface3dopt.DoIt                = off
 inverseopt.distribopt.DoIt           = off
+
+### 4. Useful links:
+
+http://www.bosai.go.jp/study/application/dc3d/DC3Dhtml_E.html
+
+
