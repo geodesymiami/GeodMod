@@ -48,7 +48,7 @@ Start matlab program from terminal to initiate the environment variables defined
 matlab
 >>geodmod Darwin.min
 >>geodmod Wells.min
-```The
+```
 
 ### 3. Tips
 You can disable most of the plotting (quick runs) using:
@@ -58,7 +58,8 @@ plotthemodelopt.DoIt                 = off
 plotsurface3dopt.DoIt                = off
 inverseopt.distribopt.DoIt           = off
 ```
-### 4. Dislocation  concention
+
+### 4. Dislocation  convention
 Geodmod uses the same dislocation code as GBIS. See the GBIS manual for  definition of the parameters.
 
 In contrast to GBIS geodmod always requires the strike-slip, downdip and opening component. GBIS requires for a fault onlt the first two and for a dike the last (the unused components are set to zero internally).
@@ -68,6 +69,7 @@ inverseopt.QuickStop                 = true
 plotthemodelopt.DoIt                 = off
 plotsurface3dopt.DoIt                = off
 inverseopt.distribopt.DoIt           = off
+```
 
 ### 4. Useful links:
 
