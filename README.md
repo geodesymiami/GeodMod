@@ -71,6 +71,9 @@ plotsurface3dopt.DoIt                = off
 inverseopt.distribopt.DoIt           = off
 ```
 
+The relationship between dip and strike is the same with that of GBIS(right hand rule);
+But for the middle point (Xiaorran):
+In Geodmod, the middle point always loated at the lower edge; In GBIS, the location of middle point has relationship with the dip(negtive dip means middle point locates at the upper edge while positive dip means middle point locates at the lower edge).
 ### 4. Useful links:
 
 http://www.bosai.go.jp/study/application/dc3d/DC3Dhtml_E.html
