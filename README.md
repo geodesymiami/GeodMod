@@ -86,4 +86,6 @@ Add another line on Mac
 
 Again one more line from Mac
 
+Put a line in-between on Mac
+
 Again a line to checkout sqashing
