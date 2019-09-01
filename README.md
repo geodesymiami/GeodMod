@@ -73,3 +73,4 @@ In Geodmod, the middle point always loated at the lower edge; In GBIS, the locat
 http://www.bosai.go.jp/study/application/dc3d/DC3Dhtml_E.html
 
 
+This is from fork and should go on top of master
