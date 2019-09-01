@@ -74,6 +74,7 @@ http://www.bosai.go.jp/study/application/dc3d/DC3Dhtml_E.html
 
 --- test area for githubb -----
 
+Lets add one line to upstream at the beginning
 Second addition to upstream before everything else.
 
 Addition to upstream that needs to bbe removed
