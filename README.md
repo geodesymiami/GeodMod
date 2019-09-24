@@ -72,24 +72,6 @@ In Geodmod, the middle point always loated at the lower edge; In GBIS, the locat
 
 http://www.bosai.go.jp/study/application/dc3d/DC3Dhtml_E.html
 
---- test area for githubb -----
+CDM solution using station elevation (from Francois Beauducel)
+https://github.com/IPGP/deformations-matlab/tree/master/nikkhoo
 
-Lets add one line to upstream at the beginning
-
-Second addition to upstream before everything else.
-
-Third addition to upstream in the middle to test rebasin
-
-Addition to upstream that needs to bbe removed
-
-This is from fork and should go on top of master
-A second addition to fork
-Addition to for on github
-
-Add another line on Mac
-
-Again one more line from Mac
-
-Put a line in-between on Mac
-Added a few pind signs to upstream ####
-Again a line to checkout sqashing
