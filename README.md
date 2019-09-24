@@ -72,6 +72,7 @@ In Geodmod, the middle point always loated at the lower edge; In GBIS, the locat
 
 http://www.bosai.go.jp/study/application/dc3d/DC3Dhtml_E.html
 
-CDM solution using station elevation (from Francois Beauducel)
+CDM solution using station elevation (from Francois Beauducel):
+
 https://github.com/IPGP/deformations-matlab/tree/master/nikkhoo
 
